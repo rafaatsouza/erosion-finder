@@ -13,9 +13,9 @@ namespace ErosionFinder.Domain.Exceptions
             new ConstraintCustomError(nameof(NamespaceNotFoundForLayer),
                 $"No namespaces were found for the informed layer '{layerName}'");
 
-        public static ConstraintCustomError ConstraintFileNullOrEmpty =>
-            new ConstraintCustomError(nameof(ConstraintFileNullOrEmpty),
-                $"The constraints file is null or empty");
+        public static ConstraintCustomError ConstraintsNullOrEmpty =>
+            new ConstraintCustomError(nameof(ConstraintsNullOrEmpty),
+                $"The constraints object is null or empty");
 
         public static ConstraintCustomError LayerOfRuleNotDefined =>
             new ConstraintCustomError(nameof(LayerOfRuleNotDefined),
