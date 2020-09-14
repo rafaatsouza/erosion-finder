@@ -6,29 +6,22 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.0.0
-
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.402
-
       - name: Install dependencies
-        run: dotnet restore
-
+        run: dotnet restore Source/
       - name: Build
-        run: dotnet build --configuration Release --no-restore
-
+        run: dotnet build Source/ --configuration Release --no-restore
       - name: Publish ErosionFinder
         uses: brandedoutcast/publish-nuget@v2.5.2
         with:
             PROJECT_FILE_PATH: Source/ErosionFinder/ErosionFinder.csproj
             PACKAGE_NAME: ErosionFinder
             NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-            VERSION_REGEX: <version>(.*)<\/version>
+            VERSION_REGEX: <version>(.*)<\/version> 
