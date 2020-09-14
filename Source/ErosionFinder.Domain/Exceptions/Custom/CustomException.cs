@@ -4,11 +4,16 @@ namespace ErosionFinder.Domain.Exceptions.Custom
 {
     public abstract class CustomException : Exception
     {
-        protected CustomException(string message) : base(message) { }
+        public string Key { get; set; }
+
+        protected CustomException(string key, string message) : base(message) 
+        {
+            Key = key;
+        }
     }
 
     public abstract class CustomException<T> : CustomException where T : CustomError
     {
-        protected CustomException(CustomError error) : base(error.Message) { }
+        protected CustomException(CustomError error) : base(error.Key, error.Message) { }
     }
 }
