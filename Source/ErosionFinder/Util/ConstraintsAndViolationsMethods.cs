@@ -96,8 +96,8 @@ namespace ErosionFinder.Util
                 || !constraints.Layers.Any()
                 || !constraints.Rules.Any())
             {
-                throw new ConstraintCustomException(
-                    ConstraintCustomError.ConstraintsNullOrEmpty);
+                throw new ConstraintsException(
+                    ConstraintsError.ConstraintsNullOrEmpty);
             }
 
             var originLayers = constraints.Rules
@@ -113,8 +113,8 @@ namespace ErosionFinder.Util
 
             if (layersNotDefined)
             {
-                throw new ConstraintCustomException(
-                    ConstraintCustomError.LayerOfRuleNotDefined);
+                throw new ConstraintsException(
+                    ConstraintsError.LayerOfRuleNotDefined);
             }
 
             var explicitlyDefinedLayers = constraints.Layers
@@ -128,8 +128,8 @@ namespace ErosionFinder.Util
                 {
                     if (layer.Value.Namespaces == null || !layer.Value.Namespaces.Any())
                     {
-                        throw new ConstraintCustomException(
-                            ConstraintCustomError.NamespaceNotFoundForLayer(layer.Key));
+                        throw new ConstraintsException(
+                            ConstraintsError.NamespaceNotFoundForLayer(layer.Key));
                     }
                 } 
             }
@@ -157,8 +157,8 @@ namespace ErosionFinder.Util
 
                 if (layerNamespaces == null || !layerNamespaces.Any())
                 {
-                    throw new ConstraintCustomException(
-                        ConstraintCustomError.NamespaceNotFoundForLayer(layer.Key));
+                    throw new ConstraintsException(
+                        ConstraintsError.NamespaceNotFoundForLayer(layer.Key));
                 }
 
                 yield return new LayerNamespaces()

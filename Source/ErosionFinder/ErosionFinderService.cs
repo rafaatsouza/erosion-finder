@@ -51,8 +51,8 @@ namespace ErosionFinder
 
             if (!solutionFile.Exists)
             {
-                throw new SolutionCustomException(
-                    SolutionCustomError.SolutionFileNotFound);
+                throw new SolutionException(
+                    SolutionError.SolutionFileNotFound);
             }
 
             ConstraintsAndViolationsMethods.CheckConstraints(constraints);
@@ -104,8 +104,8 @@ namespace ErosionFinder
 
                 if (!solution.Projects.Any())
                 {
-                    throw new SolutionCustomException(
-                        SolutionCustomError.SolutionWithoutProjects);
+                    throw new SolutionException(
+                        SolutionError.SolutionWithoutProjects);
                 }
 
                 var lockObject = new object();
@@ -129,8 +129,8 @@ namespace ErosionFinder
 
                 if (!documents.Any())
                 {
-                    throw new SolutionCustomException(
-                        SolutionCustomError.SolutionWithoutCodeFiles);
+                    throw new SolutionException(
+                        SolutionError.SolutionWithoutCodeFiles);
                 }
 
                 return documents;

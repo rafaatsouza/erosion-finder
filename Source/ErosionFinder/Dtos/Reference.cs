@@ -25,8 +25,8 @@ namespace ErosionFinder.Dtos
             Symbol = GetSymbol(semanticModel, expressionSyntax);
 
             if (Symbol == null && !Reserved && !ExplicitlyDynamic && !Anonymous)
-                throw new AnalysisCustomException(
-                    AnalysisCustomError.TypeNotResolved(expressionSyntax.ToString()));
+                throw new CodeAnalysisException(
+                    CodeAnalysisError.TypeNotResolved(expressionSyntax.ToString()));
             else if (Reserved || ExplicitlyDynamic || Anonymous)
                 return;
 
@@ -41,8 +41,8 @@ namespace ErosionFinder.Dtos
                 var typeInfo = semanticModel.GetTypeInfo(expressionSyntax);
 
                 if (typeInfo.ConvertedType == null)
-                    throw new AnalysisCustomException(
-                        AnalysisCustomError.TypeNotResolved(expressionSyntax.ToString()));
+                    throw new CodeAnalysisException(
+                        CodeAnalysisError.TypeNotResolved(expressionSyntax.ToString()));
 
                 Symbol = typeInfo.ConvertedType.ContainingSymbol;
 
