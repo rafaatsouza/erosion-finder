@@ -1,13 +1,13 @@
-﻿using ErosionFinder.Domain.Exceptions.Custom;
+﻿using ErosionFinder.Domain.Exceptions.Base;
 
 namespace ErosionFinder.Domain.Exceptions
 {
-    public class AnalysisCustomException : CustomException<AnalysisCustomError>
+    public class AnalysisCustomException : ErosionFinderException<AnalysisCustomError>
     {
         public AnalysisCustomException(AnalysisCustomError error) : base(error) { }
     }
 
-    public class AnalysisCustomError : CustomError
+    public class AnalysisCustomError : ErosionFinderError
     {
         public static AnalysisCustomError TypeNotResolved(string typeName) =>
             new AnalysisCustomError(nameof(TypeNotResolved), 

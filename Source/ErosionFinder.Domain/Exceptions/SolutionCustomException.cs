@@ -1,13 +1,13 @@
-﻿using ErosionFinder.Domain.Exceptions.Custom;
+﻿using ErosionFinder.Domain.Exceptions.Base;
 
 namespace ErosionFinder.Domain.Exceptions
 {
-    public class SolutionCustomException : CustomException<SolutionCustomError>
+    public class SolutionCustomException : ErosionFinderException<SolutionCustomError>
     {
         public SolutionCustomException(SolutionCustomError error) : base(error) { }
     }
 
-    public class SolutionCustomError : CustomError
+    public class SolutionCustomError : ErosionFinderError
     {
         public static SolutionCustomError SolutionFileNotFound =>
             new SolutionCustomError(nameof(SolutionFileNotFound),

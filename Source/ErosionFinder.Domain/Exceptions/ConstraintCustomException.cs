@@ -1,13 +1,13 @@
-﻿using ErosionFinder.Domain.Exceptions.Custom;
+﻿using ErosionFinder.Domain.Exceptions.Base;
 
 namespace ErosionFinder.Domain.Exceptions
 {
-    public class ConstraintCustomException : CustomException<ConstraintCustomError>
+    public class ConstraintCustomException : ErosionFinderException<ConstraintCustomError>
     {
         public ConstraintCustomException(ConstraintCustomError error) : base(error) { }
     }
 
-    public class ConstraintCustomError : CustomError
+    public class ConstraintCustomError : ErosionFinderError
     {
         public static ConstraintCustomError NamespaceNotFoundForLayer(string layerName) =>
             new ConstraintCustomError(nameof(NamespaceNotFoundForLayer),
