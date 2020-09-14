@@ -15,11 +15,11 @@ namespace ErosionFinder.Domain.Exceptions
 
         public static ConstraintsError ConstraintsNullOrEmpty =>
             new ConstraintsError(nameof(ConstraintsNullOrEmpty),
-                $"The constraints object is null or empty");
+                "The constraints object is null or empty");
 
         public static ConstraintsError LayerOfRuleNotDefined =>
             new ConstraintsError(nameof(LayerOfRuleNotDefined),
-                $"There are layers in the rules which are not defined");
+                "There are layers in the rules which are not defined");
 
         protected ConstraintsError(string key, string error) : base(key, error) { }
     }
