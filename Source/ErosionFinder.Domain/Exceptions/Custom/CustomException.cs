@@ -4,7 +4,7 @@ namespace ErosionFinder.Domain.Exceptions.Custom
 {
     public abstract class CustomException : Exception
     {
-        public string Key { get; set; }
+        public string Key { get; }
 
         protected CustomException(string key, string message) : base(message) 
         {
