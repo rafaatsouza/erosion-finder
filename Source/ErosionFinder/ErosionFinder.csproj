@@ -2,6 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <Authors>Rafael Torres Souza</Authors>
+    <Company>Rafael Torres Souza</Company>
+    <Description>A library to find architectural erosion across C# code.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/rafaatsouza/erosion-finder</PackageProjectUrl>
+    <PackageTags>architectural-analysis, architectural-erosion, roslyn, architect, arch</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
