@@ -1,5 +1,4 @@
-﻿using ErosionFinder.Domain.Exceptions.Custom;
-using ErosionFinder.Domain.Models;
+﻿using ErosionFinder.Domain.Exceptions.Base;
 using ErosionFinder.Dtos;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -101,7 +100,7 @@ namespace ErosionFinder.SyntaxWalkers
             {
                 reference = new Reference(semanticModel, expressionSyntax);
             }
-            catch (CustomException ex)
+            catch (ErosionFinderException ex)
             {
                 var span = expressionSyntax.SyntaxTree.GetLineSpan(expressionSyntax.Span);
                 var lineNumber = span.StartLinePosition.Line + 1;

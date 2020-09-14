@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 
-namespace ErosionFinder.Domain.Models
+namespace ErosionFinder.Dtos
 {
     /// <summary>
     /// Class that represents a C# structure, a component that is written in some .cs file
     /// </summary>
-    public class Structure
+    internal class Structure
     {
         /// <summary>
         /// Name of the structure

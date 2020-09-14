@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 
-namespace ErosionFinder.Domain.Models
+namespace ErosionFinder.Dtos
 {
     /// <summary>
     /// Class that represents a relation to some namespace
     /// </summary>
-    public class Relation
+    internal class Relation
     {
         /// <summary>
         /// Type of the relation

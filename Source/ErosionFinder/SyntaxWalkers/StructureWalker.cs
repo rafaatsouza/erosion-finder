@@ -1,5 +1,5 @@
 ﻿using ErosionFinder.Domain.Exceptions;
-using ErosionFinder.Domain.Models;
+using ErosionFinder.Dtos;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -76,8 +76,8 @@ namespace ErosionFinder.SyntaxWalkers
 
             var namespaceIdentifier = ((BaseTypeDeclarationSyntax)member).Identifier.ValueText;
 
-            throw new AnalysisCustomException(
-                AnalysisCustomError.StructureTypeNotFound(namespaceIdentifier));
+            throw new CodeAnalysisException(
+                CodeAnalysisError.StructureTypeNotFound(namespaceIdentifier));
         }
 
         private void IncreaseRelations(Func<RelationsRetrieverWalker> getWalker, SyntaxNode node)

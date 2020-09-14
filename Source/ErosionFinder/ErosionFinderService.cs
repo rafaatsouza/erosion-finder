@@ -1,21 +1,22 @@
-﻿using ErosionFinder.Domain.Models;
-using ErosionFinder.Extensions;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.MSBuild;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ErosionFinder.SyntaxWalkers;
-using System.Threading;
-using ErosionFinder.Logger;
-using Dasync.Collections;
-using Microsoft.Extensions.Logging;
-using System.Collections.Immutable;
-using ErosionFinder.Util;
-using System.IO;
+﻿using Dasync.Collections;
+using ErosionFinder.Domain.Models;
 using ErosionFinder.Domain.Exceptions;
 using ErosionFinder.Domain.Interfaces;
+using ErosionFinder.Dtos;
+using ErosionFinder.Extensions;
+using ErosionFinder.Logger;
+using ErosionFinder.SyntaxWalkers;
+using ErosionFinder.Util;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.MSBuild;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace ErosionFinder
 {
@@ -50,8 +51,8 @@ namespace ErosionFinder
 
             if (!solutionFile.Exists)
             {
-                throw new SolutionCustomException(
-                    SolutionCustomError.SolutionFileNotFound);
+                throw new SolutionException(
+                    SolutionError.SolutionFileNotFound);
             }
 
             ConstraintsAndViolationsMethods.CheckConstraints(constraints);
@@ -103,8 +104,8 @@ namespace ErosionFinder
 
                 if (!solution.Projects.Any())
                 {
-                    throw new SolutionCustomException(
-                        SolutionCustomError.SolutionWithoutProjects);
+                    throw new SolutionException(
+                        SolutionError.SolutionWithoutProjects);
                 }
 
                 var lockObject = new object();
@@ -128,8 +129,8 @@ namespace ErosionFinder
 
                 if (!documents.Any())
                 {
-                    throw new SolutionCustomException(
-                        SolutionCustomError.SolutionWithoutCodeFiles);
+                    throw new SolutionException(
+                        SolutionError.SolutionWithoutCodeFiles);
                 }
 
                 return documents;
