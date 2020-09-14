@@ -1,6 +1,6 @@
-﻿namespace ErosionFinder.Domain.Models
+﻿namespace ErosionFinder.Dtos
 {
-    public enum RelationType
+    internal enum RelationType
     {
         /// <summary>
         /// Some components inherits from another component

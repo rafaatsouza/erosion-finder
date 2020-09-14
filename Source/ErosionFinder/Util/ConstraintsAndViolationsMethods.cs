@@ -1,5 +1,6 @@
 ﻿using ErosionFinder.Domain.Exceptions;
 using ErosionFinder.Domain.Models;
+using ErosionFinder.Dtos;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -96,7 +97,7 @@ namespace ErosionFinder.Util
                 || !constraints.Rules.Any())
             {
                 throw new ConstraintCustomException(
-                    ConstraintCustomError.ConstraintFileNullOrEmpty);
+                    ConstraintCustomError.ConstraintsNullOrEmpty);
             }
 
             var originLayers = constraints.Rules

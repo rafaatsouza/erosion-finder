@@ -1,5 +1,5 @@
 ﻿using ErosionFinder.Domain.Exceptions;
-using ErosionFinder.Domain.Models;
+using ErosionFinder.Dtos;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;

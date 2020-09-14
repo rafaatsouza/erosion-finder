@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 
-namespace ErosionFinder.Domain.Models
+namespace ErosionFinder.Dtos
 {
     /// <summary>
     /// C# code file - a file with ".cs" extension
     /// </summary>
-    public class CodeFile
+    internal class CodeFile
     {
         /// <summary>
         /// Name of the file
