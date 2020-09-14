@@ -24,5 +24,3 @@ jobs:
             PROJECT_FILE_PATH: Source/ErosionFinder/ErosionFinder.csproj
             PACKAGE_NAME: ErosionFinder
             NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-            VERSION_FILE_PATH: ErosionFinder.nuspec
-            VERSION_REGEX: ^\s*<version>(.*)<\/version>\s*$
