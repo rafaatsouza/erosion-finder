@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace ErosionFinder.Domain.Models
+namespace ErosionFinder.Data.Models
 {
     /// <summary>
     /// Represents the grouping of the namespaces by regular expression

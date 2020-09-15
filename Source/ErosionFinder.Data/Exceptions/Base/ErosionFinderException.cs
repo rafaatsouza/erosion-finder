@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ErosionFinder.Domain.Exceptions.Base
+namespace ErosionFinder.Data.Exceptions.Base
 {
     public abstract class ErosionFinderException : Exception
     {

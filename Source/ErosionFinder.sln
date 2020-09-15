@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ErosionFinder.Domain", "ErosionFinder.Domain\ErosionFinder.Domain.csproj", "{690C5079-3AF7-4532-9BF2-AFC18AC02EB9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ErosionFinder", "ErosionFinder\ErosionFinder.csproj", "{FAB71509-23EB-49F2-BAD2-5D90C7473335}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ErosionFinder.Data.Converter", "ErosionFinder.Data.Converter\ErosionFinder.Data.Converter.csproj", "{19701D85-D2EE-469D-8596-F92531587FFC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ErosionFinder.Data", "ErosionFinder.Data\ErosionFinder.Data.csproj", "{A48BECFF-137B-4AE6-A0A7-AAF70D2760C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +15,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{690C5079-3AF7-4532-9BF2-AFC18AC02EB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{690C5079-3AF7-4532-9BF2-AFC18AC02EB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{690C5079-3AF7-4532-9BF2-AFC18AC02EB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{690C5079-3AF7-4532-9BF2-AFC18AC02EB9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FAB71509-23EB-49F2-BAD2-5D90C7473335}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FAB71509-23EB-49F2-BAD2-5D90C7473335}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FAB71509-23EB-49F2-BAD2-5D90C7473335}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FAB71509-23EB-49F2-BAD2-5D90C7473335}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19701D85-D2EE-469D-8596-F92531587FFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19701D85-D2EE-469D-8596-F92531587FFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19701D85-D2EE-469D-8596-F92531587FFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19701D85-D2EE-469D-8596-F92531587FFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A48BECFF-137B-4AE6-A0A7-AAF70D2760C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A48BECFF-137B-4AE6-A0A7-AAF70D2760C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A48BECFF-137B-4AE6-A0A7-AAF70D2760C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A48BECFF-137B-4AE6-A0A7-AAF70D2760C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

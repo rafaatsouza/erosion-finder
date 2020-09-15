@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ErosionFinder.Domain.Models
+namespace ErosionFinder.Data.Models
 {
     /// <summary>
     /// Represents the grouping by listing all the namespaces explicitly

@@ -1,4 +1,4 @@
-﻿namespace ErosionFinder.Domain.Exceptions.Base
+﻿namespace ErosionFinder.Data.Exceptions.Base
 {
     public abstract class ErosionFinderError
     {

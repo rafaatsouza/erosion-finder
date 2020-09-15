@@ -1,5 +1,5 @@
 ﻿using ErosionFinder;
-using ErosionFinder.Domain.Interfaces;
+using ErosionFinder.Data.Interfaces;
 using ErosionFinder.Logger;
 using Microsoft.Extensions.Logging;
 using System;

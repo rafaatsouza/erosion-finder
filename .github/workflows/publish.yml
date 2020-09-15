@@ -22,11 +22,11 @@ jobs:
       - name: Build
         run: dotnet build Source/ --configuration Release --no-restore
       
-      - name: Publish ErosionFinder.Domain
+      - name: Publish ErosionFinder.Data
         uses: brandedoutcast/publish-nuget@v2.5.2
         with:
-            PROJECT_FILE_PATH: Source/ErosionFinder.Domain/ErosionFinder.Domain.csproj
-            PACKAGE_NAME: ErosionFinder.Domain
+            PROJECT_FILE_PATH: Source/ErosionFinder.Data/ErosionFinder.Data.csproj
+            PACKAGE_NAME: ErosionFinder.Data
             NUGET_KEY: ${{secrets.NUGET_API_KEY}}
 
       - name: Publish ErosionFinder
@@ -34,4 +34,11 @@ jobs:
         with:
             PROJECT_FILE_PATH: Source/ErosionFinder/ErosionFinder.csproj
             PACKAGE_NAME: ErosionFinder
+            NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+
+      - name: Publish ErosionFinder.Data.Converter
+        uses: brandedoutcast/publish-nuget@v2.5.2
+        with:
+            PROJECT_FILE_PATH: Source/ErosionFinder.Data.Converter/ErosionFinder.Data.Converter.csproj
+            PACKAGE_NAME: ErosionFinder.Data.Converter
             NUGET_KEY: ${{secrets.NUGET_API_KEY}}

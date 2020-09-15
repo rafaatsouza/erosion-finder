@@ -1,9 +1,9 @@
-﻿using ErosionFinder.Domain.Models;
+﻿using ErosionFinder.Data.Models;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ErosionFinder.Domain.Interfaces
+namespace ErosionFinder.Data.Interfaces
 {
     public interface IErosionFinderService
     {

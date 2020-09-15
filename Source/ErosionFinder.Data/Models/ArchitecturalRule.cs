@@ -1,4 +1,4 @@
-﻿namespace ErosionFinder.Domain.Models
+﻿namespace ErosionFinder.Data.Models
 {
     /// <summary>
     /// Rule about relation between two layers

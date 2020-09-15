@@ -1,6 +1,6 @@
-﻿using ErosionFinder.Domain.Exceptions.Base;
+﻿using ErosionFinder.Data.Exceptions.Base;
 
-namespace ErosionFinder.Domain.Exceptions
+namespace ErosionFinder.Data.Exceptions
 {
     public class SolutionException : ErosionFinderException<SolutionError>
     {

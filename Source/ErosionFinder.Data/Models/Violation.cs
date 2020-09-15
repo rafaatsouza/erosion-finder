@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ErosionFinder.Domain.Models
+namespace ErosionFinder.Data.Models
 {
     /// <summary>
     /// Class that represents some violation; i.e. some defined rule which was not followed

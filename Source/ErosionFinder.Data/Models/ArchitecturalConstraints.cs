@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ErosionFinder.Domain.Models
+namespace ErosionFinder.Data.Models
 {
     /// <summary>
     /// Set of architectural layers and rules that defines the constraints

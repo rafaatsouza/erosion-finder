@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ErosionFinder.Domain.Models
+namespace ErosionFinder.Data.Models
 {
     /// <summary>
     /// Class that represents the namespaces evaluation for each layer

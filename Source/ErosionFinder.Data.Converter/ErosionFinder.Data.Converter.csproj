@@ -1,14 +1,22 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Authors>Rafael Torres Souza</Authors>
     <Company>Rafael Torres Souza</Company>
-    <Description>Domain objects used by the ErosionFinder package.</Description>
+    <Description>Converters for the data objects that are used by the ErosionFinder package.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/rafaatsouza/erosion-finder</PackageProjectUrl>
     <PackageTags>architectural-analysis, architectural-erosion, roslyn, architect, arch</PackageTags>
-    <Version>1.0.2</Version>
+    <Version>1.1.0</Version>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ErosionFinder.Data\ErosionFinder.Data.csproj" />
+  </ItemGroup>
 
 </Project>

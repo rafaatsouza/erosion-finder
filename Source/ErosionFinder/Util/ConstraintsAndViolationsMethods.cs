@@ -1,5 +1,5 @@
-﻿using ErosionFinder.Domain.Exceptions;
-using ErosionFinder.Domain.Models;
+﻿using ErosionFinder.Data.Exceptions;
+using ErosionFinder.Data.Models;
 using ErosionFinder.Dtos;
 using System.Collections.Generic;
 using System.Linq;

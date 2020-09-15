@@ -1,7 +1,7 @@
 ﻿using Dasync.Collections;
-using ErosionFinder.Domain.Models;
-using ErosionFinder.Domain.Exceptions;
-using ErosionFinder.Domain.Interfaces;
+using ErosionFinder.Data.Models;
+using ErosionFinder.Data.Exceptions;
+using ErosionFinder.Data.Interfaces;
 using ErosionFinder.Dtos;
 using ErosionFinder.Extensions;
 using ErosionFinder.Logger;
