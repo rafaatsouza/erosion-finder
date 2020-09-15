@@ -4,11 +4,16 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <Authors>Rafael Torres Souza</Authors>
     <Company>Rafael Torres Souza</Company>
-    <Description>A library to find architectural erosion across C# code.</Description>
+    <Description>
+      A library to find architectural erosion across C# code.
+
+      Icon made by Freepik, from https://www.flaticon.com/
+    </Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/rafaatsouza/erosion-finder</PackageProjectUrl>
     <PackageTags>architectural-analysis, architectural-erosion, roslyn, architect, arch</PackageTags>
-    <Version>1.1.2</Version>
+    <Version>1.1.3</Version>
+    <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,6 +31,13 @@
     <PackageReference Include="NuGet.Packaging" Version="5.7.0" />
     <PackageReference Include="NuGet.ProjectModel" Version="5.7.0" />
     <PackageReference Include="NuGet.Versioning" Version="5.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -4,11 +4,23 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <Authors>Rafael Torres Souza</Authors>
     <Company>Rafael Torres Souza</Company>
-    <Description>Data objects used by the ErosionFinder package.</Description>
+    <Description>
+      Data objects used by the ErosionFinder package.
+
+      Icon made by Freepik, from https://www.flaticon.com/
+    </Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/rafaatsouza/erosion-finder</PackageProjectUrl>
     <PackageTags>architectural-analysis, architectural-erosion, roslyn, architect, arch</PackageTags>
-    <Version>1.1.2</Version>
+    <Version>1.1.3</Version>
+    <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
