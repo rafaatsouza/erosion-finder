@@ -12,6 +12,8 @@ namespace ErosionFinder.Data.Models
         /// </summary>
         public Regex NamespaceRegexPattern { get; set; }
 
+        public NamespacesRegularExpressionGrouped() { }
+
         public NamespacesRegularExpressionGrouped(Regex namespaceRegexPattern)
         {
             NamespaceRegexPattern = namespaceRegexPattern;
