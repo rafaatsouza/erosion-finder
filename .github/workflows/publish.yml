@@ -1,4 +1,4 @@
-name: Publish Package
+name: Publish Packages
 
 on:
   push:
@@ -10,14 +10,25 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.402
+
       - name: Install dependencies
         run: dotnet restore Source/
+
       - name: Build
         run: dotnet build Source/ --configuration Release --no-restore
+      
+      - name: Publish ErosionFinder.Domain
+        uses: brandedoutcast/publish-nuget@v2.5.2
+        with:
+            PROJECT_FILE_PATH: Source/ErosionFinder.Domain/ErosionFinder.Domain.csproj
+            PACKAGE_NAME: ErosionFinder.Domain
+            NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+
       - name: Publish ErosionFinder
         uses: brandedoutcast/publish-nuget@v2.5.2
         with:

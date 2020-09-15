@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <Authors>Rafael Torres Souza</Authors>
+    <Company>Rafael Torres Souza</Company>
+    <Description>Domain objects used by the ErosionFinder package.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/rafaatsouza/erosion-finder</PackageProjectUrl>
+    <PackageTags>architectural-analysis, architectural-erosion, roslyn, architect, arch</PackageTags>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
 </Project>
