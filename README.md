@@ -15,8 +15,11 @@ Install-Package ErosionFinder
 
 Example
 ------------
-```
+```csharp
+using ErosionFinder.Data.Models;
 using Microsoft.Build.Locator;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Sample
@@ -31,7 +34,7 @@ namespace Sample
   
   static async Task Main(string[] args)
   {
-    var serviceLayerRegex = new Regex(@"(TargetSolutionNamespace)(.+)(\\w*(Service([s]{1})?)\\b)");
+    var serviceLayerRegex = new Regex(@"(TargetSolutionNamespace)(.+)(\\w*(Service([s]{1})?)\\b)"); 
     var modelLayerRegex = new Regex(@"(TargetSolutionNamespace)(.+)(\\w*(Model([s]{1})?)\\b)");
     
     var constraints = new ArchitecturalConstraints()
