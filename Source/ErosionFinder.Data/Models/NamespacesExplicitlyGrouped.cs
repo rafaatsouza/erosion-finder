@@ -11,5 +11,10 @@ namespace ErosionFinder.Data.Models
         /// List of namespaces
         /// </summary>
         public IEnumerable<string> Namespaces { get; set; }
+
+        public NamespacesExplicitlyGrouped(IEnumerable<string> namespaces)
+        {
+            Namespaces = namespaces;
+        }
     }
 }
