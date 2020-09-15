@@ -10,7 +10,7 @@ namespace Microsoft.Extensions.DependencyInjection
     [ExcludeFromCodeCoverage]
     public static class ErosionFinderServiceCollectionExtensions
     {
-        public static IServiceCollection AddAnalysisToolAdapter(this IServiceCollection services)
+        public static IServiceCollection AddErosionFinder(this IServiceCollection services)
         {
             services.AddScoped(serviceProvider =>
             {
