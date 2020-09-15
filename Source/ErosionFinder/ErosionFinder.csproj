@@ -4,10 +4,9 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <Authors>Rafael Torres Souza</Authors>
     <Company>Rafael Torres Souza</Company>
-    <Description>
-      A library to find architectural erosion across C# code.
+    <Description>A library to find architectural erosion across C# code.
 
-      Icon made by Freepik, from https://www.flaticon.com/
+Icon made by Freepik, from https://www.flaticon.com/
     </Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/rafaatsouza/erosion-finder</PackageProjectUrl>
