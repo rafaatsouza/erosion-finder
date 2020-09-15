@@ -1,4 +1,4 @@
-![Project Icon](icon.png) ErosionFinder
+<a href="icon.png"><img width="42px" height="42px" src="icon.png" /></a> ErosionFinder
 ==================================
 
 [![NuGet version (ErosionFinder)](https://img.shields.io/nuget/v/ErosionFinder.svg?style=flat-square)](https://www.nuget.org/packages/ErosionFinder/)
