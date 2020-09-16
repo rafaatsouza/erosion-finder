@@ -1,7 +1,7 @@
 <a href="icon.png"><img width="42px" height="42px" src="icon.png" /></a> ErosionFinder
 ==================================
 
-[![NuGet version (ErosionFinder)](https://img.shields.io/nuget/v/ErosionFinder.svg?style=flat-square)](https://www.nuget.org/packages/ErosionFinder/)
+[![NuGet version (ErosionFinder)](https://img.shields.io/nuget/v/ErosionFinder.svg)](https://www.nuget.org/packages/ErosionFinder/)
 
 ErosionFinder is a library to find architectural erosion across C# code; it uses the Roslyn API to navigate throught all components from some C# solution, and checks for architectural violations based on informed rules.
 
@@ -41,10 +41,10 @@ namespace Sample
         Layers = new Dictionary<string, NamespacesGroupingMethod>()
         {
           {
-          "Services", new NamespacesRegularExpressionGrouped(serviceLayerRegex)
+            "Services", new NamespacesRegularExpressionGrouped(serviceLayerRegex)
           },
           {
-          "Models", new NamespacesRegularExpressionGrouped(modelLayerRegex)
+            "Models", new NamespacesRegularExpressionGrouped(modelLayerRegex)
           }
         },
         Rules = new List<ArchitecturalRule>()
