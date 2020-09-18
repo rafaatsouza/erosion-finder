@@ -1,5 +1,4 @@
-﻿using Dasync.Collections;
-using ErosionFinder.Data.Models;
+﻿using ErosionFinder.Data.Models;
 using ErosionFinder.Data.Exceptions;
 using ErosionFinder.Data.Interfaces;
 using ErosionFinder.Dtos;
@@ -26,8 +25,6 @@ namespace ErosionFinder
         private readonly ILoggerFactory loggerFactory;
         private readonly Microsoft.Build.Framework.ILogger buildLogger;
 
-        private const int MaxDegreeOfParallelism = 10;
-
         public ErosionFinderService(ILoggerFactory loggerFactory, BuildLogger buildLogger)
         {
             this.loggerFactory = loggerFactory
@@ -42,7 +39,8 @@ namespace ErosionFinder
         }
 
         public async Task<IEnumerable<Violation>> GetViolationsBySolutionFilePathAndConstraintsAsync(
-            string solutionFilePath, ArchitecturalConstraints constraints, CancellationToken cancellationToken)
+            string solutionFilePath, ArchitecturalConstraints constraints, 
+            CancellationToken cancellationToken)
         {
             if (string.IsNullOrEmpty(solutionFilePath))
                 throw new ArgumentNullException(nameof(solutionFilePath));
@@ -67,26 +65,13 @@ namespace ErosionFinder
         private async Task<IEnumerable<CodeFile>> GetCodeFilesBySolutionFilePathAsync(
             string solutionFilePath, CancellationToken cancellationToken)
         {
-            var documents = await GetDocumentsAsync(solutionFilePath, cancellationToken);
+            var documents = await GetDocumentsAsync(
+                solutionFilePath, cancellationToken);
 
-            var codeFiles = new List<CodeFile>();
-            var lockObject = new object();
+            var getCodeFiles = documents
+                .Select(document => GetCodeFileBySyntaxAsync(document, cancellationToken));
 
-            await documents.ParallelForEachAsync(async document =>
-            {
-                var codeFile = await GetCodeFileBySyntaxAsync(
-                    document, cancellationToken);
-
-                if (codeFile != null)
-                {
-                    lock (lockObject)
-                    {
-                        codeFiles.Add(codeFile);
-                    }
-                }
-            }, maxDegreeOfParallelism: MaxDegreeOfParallelism, cancellationToken);
-
-            return codeFiles;
+            return await Task.WhenAll(getCodeFiles);
         }
 
         private async Task<IEnumerable<Document>> GetDocumentsAsync(
@@ -108,24 +93,15 @@ namespace ErosionFinder
                         SolutionError.SolutionWithoutProjects);
                 }
 
-                var lockObject = new object();
-                var documents = new List<Document>();
-
-                await solution.Projects
+                var checkDocuments = solution.Projects
                     .SelectMany(p => p.Documents)
-                    .ParallelForEachAsync(async document =>
-                    {
-                        var isInExcludedList = await document
-                            .IsInExcludedListAsync(cancellationToken);
+                    .Select(document => GetDocumentsWithExcludedListCheckAsync(document, cancellationToken));
 
-                        if (!isInExcludedList)
-                        {
-                            lock (lockObject)
-                            {
-                                documents.Add(document);
-                            }
-                        }
-                    }, maxDegreeOfParallelism: MaxDegreeOfParallelism, cancellationToken);
+                var documentsWithExcludedListCheck = await Task.WhenAll(checkDocuments);
+                
+                var documents = documentsWithExcludedListCheck
+                    .Where(d => !d.IsInExcludedList)
+                    .Select(d => d.Document);
 
                 if (!documents.Any())
                 {
@@ -181,6 +157,19 @@ namespace ErosionFinder
                 FileName = document.Name,
                 FilePath = document.FilePath,
                 Structures = documentWalker.Structures
+            };
+        }
+
+        private async Task<DocumentWithExcludedListCheck> GetDocumentsWithExcludedListCheckAsync(
+            Document document, CancellationToken cancellationToken)
+        {
+            var isInExcludedList = await document
+                .IsInExcludedListAsync(cancellationToken);
+
+            return new DocumentWithExcludedListCheck()
+            {
+                Document = document,
+                IsInExcludedList = isInExcludedList
             };
         }
     }
