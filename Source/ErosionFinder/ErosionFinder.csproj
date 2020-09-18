@@ -11,7 +11,7 @@ Icon made by Freepik, from https://www.flaticon.com/
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/rafaatsouza/erosion-finder</PackageProjectUrl>
     <PackageTags>architectural-analysis, architectural-erosion, roslyn, architect, arch</PackageTags>
-    <Version>1.1.4</Version>
+    <Version>1.1.5</Version>
     <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
@@ -20,7 +20,6 @@ Icon made by Freepik, from https://www.flaticon.com/
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AsyncEnumerator" Version="4.0.2" />
     <PackageReference Include="Microsoft.Build.Framework" Version="16.6.0" ExcludeAssets="runtime" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.6.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="3.6.0" />
