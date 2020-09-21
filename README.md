@@ -16,6 +16,7 @@ Install-Package ErosionFinder
 Example
 ------------
 ```csharp
+using ErosionFinder.Core;
 using ErosionFinder.Data.Models;
 using Microsoft.Build.Locator;
 using System.Collections.Generic;
@@ -60,8 +61,7 @@ namespace Sample
 
       var solutionFilePath = @"C:\Users\MyUser\Documents\TargetSolution\TargetSolution.sln";
 
-      //The IErosionFinderService implementation it's injected by IServiceCollection".AddErosionFinder()" 
-      var violations = await erosionFinderService
+      var violations = await ErosionFinder
         .GetViolationsBySolutionFilePathAndConstraintsAsync(
           solutionFilePath, constraints, default);
     }
