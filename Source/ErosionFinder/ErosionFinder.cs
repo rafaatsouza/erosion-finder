@@ -16,7 +16,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
 
-namespace ErosionFinder.Core
+namespace ErosionFinder
 {
     public static class ErosionFinderMethods
     {
