@@ -3,7 +3,6 @@ using ErosionFinder.Dtos;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.Extensions.Logging;
 using NuGet.Packaging;
 using System;
 using System.Collections.Generic;
@@ -14,16 +13,12 @@ namespace ErosionFinder.SyntaxWalkers
     {
         private readonly SemanticModel semanticModel;
         private readonly ICollection<Relation> memberRelations;
-        private readonly ILoggerFactory loggerFactory;
 
         private MemberDeclarationSyntax BaseMemberDeclaration { get; set; }
         private string BaseMemberNamespace { get; set; }
 
-        public StructureWalker(ILoggerFactory loggerFactory, SemanticModel semanticModel)
+        public StructureWalker(SemanticModel semanticModel)
         {
-            this.loggerFactory = loggerFactory
-                ?? throw new ArgumentNullException(nameof(loggerFactory));
-
             this.semanticModel = semanticModel ??
                 throw new ArgumentNullException(nameof(semanticModel));
 
@@ -35,7 +30,7 @@ namespace ErosionFinder.SyntaxWalkers
             BaseMemberDeclaration = member;
             BaseMemberNamespace = baseMemberNamespace;
 
-            var commonWalker = new CommonWalker(loggerFactory, semanticModel, member, baseMemberNamespace);
+            var commonWalker = new CommonWalker(semanticModel, member, baseMemberNamespace);
 
             memberRelations.AddRange(commonWalker.GetRelations(member));
 
@@ -51,12 +46,14 @@ namespace ErosionFinder.SyntaxWalkers
 
         public override void VisitConstructorDeclaration(ConstructorDeclarationSyntax node)
         {
-            IncreaseRelations(() => new ConstructorWalker(loggerFactory, semanticModel, BaseMemberDeclaration, BaseMemberNamespace), node);
+            IncreaseRelations(() => new ConstructorWalker(semanticModel, 
+                BaseMemberDeclaration, BaseMemberNamespace), node);
         }
 
         public override void VisitBaseList(BaseListSyntax node)
         {
-            IncreaseRelations(() => new BaseListWalker(loggerFactory, semanticModel, BaseMemberDeclaration, BaseMemberNamespace), node);
+            IncreaseRelations(() => new BaseListWalker(semanticModel, 
+                BaseMemberDeclaration, BaseMemberNamespace), node);
         }
 
         private StructureType GetStructureType(MemberDeclarationSyntax member)

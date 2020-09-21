@@ -2,7 +2,6 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,13 +16,8 @@ namespace ErosionFinder.SyntaxWalkers
         private ICollection<string> Usings { get; set; }
         private SemanticModel SemanticModel { get; set; }
 
-        private readonly ILoggerFactory loggerFactory;
-
-        public DocumentWalker(ILoggerFactory loggerFactory)
+        public DocumentWalker()
         {
-            this.loggerFactory = loggerFactory
-                ?? throw new ArgumentNullException(nameof(loggerFactory));
-
             Usings = new List<string>();
             Structures = new List<Structure>();
         }
@@ -62,7 +56,7 @@ namespace ErosionFinder.SyntaxWalkers
 
         private void FillStructureCollection(MemberDeclarationSyntax member, string namespaceIdentifier)
         {
-            var walker = new StructureWalker(loggerFactory, SemanticModel);
+            var walker = new StructureWalker(SemanticModel);
 
             var structure = walker.GetStructure(member, namespaceIdentifier);
 
