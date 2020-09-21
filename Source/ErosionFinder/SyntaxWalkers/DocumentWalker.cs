@@ -2,7 +2,6 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -22,7 +21,8 @@ namespace ErosionFinder.SyntaxWalkers
             Structures = new List<Structure>();
         }
 
-        public async Task VisitDocumentAsync(Document document, CancellationToken cancellationToken)
+        public async Task VisitDocumentAsync(Document document, 
+            CancellationToken cancellationToken)
         {
             var rootNode = await document.GetSyntaxRootAsync(cancellationToken);
             
@@ -34,27 +34,32 @@ namespace ErosionFinder.SyntaxWalkers
             }
         }
 
-        public override void VisitUsingDirective(UsingDirectiveSyntax node)
+        public override void VisitUsingDirective(
+            UsingDirectiveSyntax node)
         {
             Usings.Add(node.Name.ToString());
         }
 
-        public override void VisitClassDeclaration(ClassDeclarationSyntax node)
+        public override void VisitClassDeclaration(
+            ClassDeclarationSyntax node)
         {
             FillStructureCollection(node, GetNamespaceIdentifier(node));
         }
 
-        public override void VisitInterfaceDeclaration(InterfaceDeclarationSyntax node)
+        public override void VisitInterfaceDeclaration(
+            InterfaceDeclarationSyntax node)
         {
             FillStructureCollection(node, GetNamespaceIdentifier(node));
         }
 
-        public override void VisitEnumDeclaration(EnumDeclarationSyntax node)
+        public override void VisitEnumDeclaration(
+            EnumDeclarationSyntax node)
         {
             FillStructureCollection(node, GetNamespaceIdentifier(node));            
         }
 
-        private void FillStructureCollection(MemberDeclarationSyntax member, string namespaceIdentifier)
+        private void FillStructureCollection(MemberDeclarationSyntax member, 
+            string namespaceIdentifier)
         {
             var walker = new StructureWalker(SemanticModel);
 
@@ -73,7 +78,8 @@ namespace ErosionFinder.SyntaxWalkers
         private string GetNamespaceIdentifier(SyntaxNode node)
             => ((NamespaceDeclarationSyntax)node.Parent).Name.ToString();
 
-        private void SearchInsideStructures<T>(MemberDeclarationSyntax memberDeclaration, string namespaceIdentifier)
+        private void SearchInsideStructures<T>(
+            MemberDeclarationSyntax memberDeclaration, string namespaceIdentifier)
         {
             var insideStructures = memberDeclaration.DescendantNodes().OfType<T>();
 

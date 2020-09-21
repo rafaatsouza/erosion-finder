@@ -10,7 +10,8 @@ namespace ErosionFinder.SyntaxWalkers
             SyntaxNode baseNode, string baseMemberNamespace) 
             : base(semanticModel, baseNode, baseMemberNamespace) { }
 
-        public override void VisitObjectCreationExpression(ObjectCreationExpressionSyntax node)
+        public override void VisitObjectCreationExpression(
+            ObjectCreationExpressionSyntax node)
         {
             if (ItsFromSameMember(node))
             {

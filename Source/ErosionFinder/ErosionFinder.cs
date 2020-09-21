@@ -18,7 +18,7 @@ using System.Threading;
 
 namespace ErosionFinder.Core
 {
-    public static class ErosionFinder
+    public static class ErosionFinderMethods
     {
         public static async Task<IEnumerable<Violation>> GetViolationsBySolutionFilePathAndConstraintsAsync(
             string solutionFilePath, ArchitecturalConstraints constraints, 

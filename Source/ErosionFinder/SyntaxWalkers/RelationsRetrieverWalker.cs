@@ -117,8 +117,12 @@ namespace ErosionFinder.SyntaxWalkers
                 return;
             }
 
-            if (string.Equals(reference.Namespace, baseMemberNamespace, StringComparison.InvariantCultureIgnoreCase)
-                && string.Equals(reference.Name, baseMemberName, StringComparison.InvariantCultureIgnoreCase))
+            var sameNamespace = string.Equals(reference.Namespace, 
+                baseMemberNamespace, StringComparison.InvariantCultureIgnoreCase);
+            var sameName = string.Equals(reference.Name, 
+                baseMemberName, StringComparison.InvariantCultureIgnoreCase);
+
+            if (sameNamespace && sameName)
             {
                 return;
             }
