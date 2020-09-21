@@ -30,7 +30,8 @@ namespace ErosionFinder.SyntaxWalkers
             BaseMemberDeclaration = member;
             BaseMemberNamespace = baseMemberNamespace;
 
-            var commonWalker = new CommonWalker(semanticModel, member, baseMemberNamespace);
+            var commonWalker = new CommonWalker(semanticModel, 
+                member, baseMemberNamespace);
 
             memberRelations.AddRange(commonWalker.GetRelations(member));
 
@@ -44,7 +45,8 @@ namespace ErosionFinder.SyntaxWalkers
             };
         }
 
-        public override void VisitConstructorDeclaration(ConstructorDeclarationSyntax node)
+        public override void VisitConstructorDeclaration(
+            ConstructorDeclarationSyntax node)
         {
             IncreaseRelations(() => new ConstructorWalker(semanticModel, 
                 BaseMemberDeclaration, BaseMemberNamespace), node);
@@ -56,7 +58,8 @@ namespace ErosionFinder.SyntaxWalkers
                 BaseMemberDeclaration, BaseMemberNamespace), node);
         }
 
-        private StructureType GetStructureType(MemberDeclarationSyntax member)
+        private StructureType GetStructureType(
+            MemberDeclarationSyntax member)
         {
             if (member is ClassDeclarationSyntax)
             {

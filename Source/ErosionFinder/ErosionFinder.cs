@@ -20,6 +20,13 @@ namespace ErosionFinder
 {
     public static class ErosionFinderMethods
     {
+        /// <summary>
+        /// Receives a C# solution file path and a set of architectural constraints, 
+        /// and returns all it's architectural violations.
+        /// </summary>
+        /// <param name="solutionFilePath">Solution file path</param>
+        /// <param name="constraints">Set of architectural constraints</param>
+        /// <returns>List of architectural violations</returns>
         public static async Task<IEnumerable<Violation>> GetViolationsBySolutionFilePathAndConstraintsAsync(
             string solutionFilePath, ArchitecturalConstraints constraints, 
             CancellationToken cancellationToken)
