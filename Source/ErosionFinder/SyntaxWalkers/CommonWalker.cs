@@ -1,15 +1,14 @@
 ﻿using ErosionFinder.Dtos;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.Extensions.Logging;
 
 namespace ErosionFinder.SyntaxWalkers
 {
     internal class CommonWalker : RelationsRetrieverWalker
     {
-        public CommonWalker(ILoggerFactory loggerFactory, SemanticModel semanticModel,
+        public CommonWalker(SemanticModel semanticModel,
             SyntaxNode baseNode, string baseMemberNamespace) 
-            : base(loggerFactory, semanticModel, baseNode, baseMemberNamespace) { }
+            : base(semanticModel, baseNode, baseMemberNamespace) { }
 
         public override void VisitObjectCreationExpression(ObjectCreationExpressionSyntax node)
         {
@@ -18,22 +17,26 @@ namespace ErosionFinder.SyntaxWalkers
                 if (FindTypeInParents<ThrowExpressionSyntax>(node, out _)
                     || FindTypeInParents<ThrowStatementSyntax>(node, out _))
                 {
-                    IncrementsRelationsFromExpressionAndCheckGenerics(node.Type, RelationType.Throw);
+                    IncrementsRelationsFromExpressionAndCheckGenerics(
+                        node.Type, RelationType.Throw);
                 }
                 else
                 {
-                    IncrementsRelationsFromExpressionAndCheckGenerics(node.Type, RelationType.Instantiate);
+                    IncrementsRelationsFromExpressionAndCheckGenerics(
+                        node.Type, RelationType.Instantiate);
                 }
 
                 base.VisitObjectCreationExpression(node);
             }
         }
 
-        public override void VisitMethodDeclaration(MethodDeclarationSyntax node)
+        public override void VisitMethodDeclaration(
+            MethodDeclarationSyntax node)
         {
             if (node.ReturnType != null)
             {
-                IncrementsRelationsFromExpressionAndCheckGenerics(node.ReturnType, RelationType.ReturnByFunction);
+                IncrementsRelationsFromExpressionAndCheckGenerics(
+                    node.ReturnType, RelationType.ReturnByFunction);
             }
 
             if (node.ParameterList != null
@@ -42,24 +45,28 @@ namespace ErosionFinder.SyntaxWalkers
             {
                 foreach (var parameter in node.ParameterList.Parameters)
                 {
-                    IncrementsRelationsFromExpressionAndCheckGenerics(parameter.Type, RelationType.ReceiptByMethodArgument);
+                    IncrementsRelationsFromExpressionAndCheckGenerics(
+                        parameter.Type, RelationType.ReceiptByMethodArgument);
                 }
             }
 
             base.VisitMethodDeclaration(node);
         }
 
-        public override void VisitVariableDeclaration(VariableDeclarationSyntax node)
+        public override void VisitVariableDeclaration(
+            VariableDeclarationSyntax node)
         {
             if (node.Type != null)
             {
-                IncrementsRelationsFromExpressionAndCheckGenerics(node.Type, RelationType.Declarate);
+                IncrementsRelationsFromExpressionAndCheckGenerics(
+                    node.Type, RelationType.Declarate);
             }
 
             base.VisitVariableDeclaration(node);
         }
 
-        public override void VisitInvocationExpression(InvocationExpressionSyntax node)
+        public override void VisitInvocationExpression(
+            InvocationExpressionSyntax node)
         {
             var expression = node.Expression;
 
@@ -67,16 +74,19 @@ namespace ErosionFinder.SyntaxWalkers
             {
                 if (memberBindingExpression.Name is IdentifierNameSyntax memberBindingIdentifierName)
                 {
-                    IncrementsRelationsFromExpressionAndCheckGenerics(memberBindingIdentifierName, RelationType.Invocate);
+                    IncrementsRelationsFromExpressionAndCheckGenerics(
+                        memberBindingIdentifierName, RelationType.Invocate);
                 }
                 else
                 {
-                    IncrementsRelationsFromExpressionAndCheckGenerics(memberBindingExpression, RelationType.Invocate);
+                    IncrementsRelationsFromExpressionAndCheckGenerics(
+                        memberBindingExpression, RelationType.Invocate);
                 }
             }
             else
             {
-                IncrementsRelationsFromExpressionAndCheckGenerics(expression, RelationType.Invocate);
+                IncrementsRelationsFromExpressionAndCheckGenerics(
+                    expression, RelationType.Invocate);
             }
 
             base.VisitInvocationExpression(node);

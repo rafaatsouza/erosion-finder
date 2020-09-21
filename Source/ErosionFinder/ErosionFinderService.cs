@@ -1,6 +1,5 @@
 ﻿using ErosionFinder.Data.Models;
 using ErosionFinder.Data.Exceptions;
-using ErosionFinder.Data.Interfaces;
 using ErosionFinder.Dtos;
 using ErosionFinder.Extensions;
 using ErosionFinder.Logger;
@@ -8,37 +7,20 @@ using ErosionFinder.SyntaxWalkers;
 using ErosionFinder.Util;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.MSBuild;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
 
-namespace ErosionFinder
+namespace ErosionFinder.Core
 {
-    internal class ErosionFinderService : IErosionFinderService
+    internal static class ErosionFinder
     {
-        private readonly ILogger logger;
-        private readonly ILoggerFactory loggerFactory;
-        private readonly Microsoft.Build.Framework.ILogger buildLogger;
-
-        public ErosionFinderService(ILoggerFactory loggerFactory, BuildLogger buildLogger)
-        {
-            this.loggerFactory = loggerFactory
-                ?? throw new ArgumentNullException(nameof(loggerFactory));
-
-            this.logger = loggerFactory.CreateLogger<ErosionFinderService>()
-                ?? throw new InvalidOperationException(
-                    $"Could not create logger for {nameof(ErosionFinderService)}");
-
-            this.buildLogger = buildLogger
-                ?? throw new ArgumentNullException(nameof(buildLogger));
-        }
-
-        public async Task<IEnumerable<Violation>> GetViolationsBySolutionFilePathAndConstraintsAsync(
+        public static async Task<IEnumerable<Violation>> GetViolationsBySolutionFilePathAndConstraintsAsync(
             string solutionFilePath, ArchitecturalConstraints constraints, 
             CancellationToken cancellationToken)
         {
@@ -62,7 +44,7 @@ namespace ErosionFinder
                 constraints, codeFiles, cancellationToken);
         }
 
-        private async Task<IEnumerable<CodeFile>> GetCodeFilesBySolutionFilePathAsync(
+        private static async Task<IEnumerable<CodeFile>> GetCodeFilesBySolutionFilePathAsync(
             string solutionFilePath, CancellationToken cancellationToken)
         {
             var documents = await GetDocumentsAsync(
@@ -74,7 +56,7 @@ namespace ErosionFinder
             return await Task.WhenAll(getCodeFiles);
         }
 
-        private async Task<IEnumerable<Document>> GetDocumentsAsync(
+        private static async Task<IEnumerable<Document>> GetDocumentsAsync(
             string solutionFilePath, CancellationToken cancellationToken)
         {
             using (var ws = MSBuildWorkspace.Create())
@@ -82,7 +64,7 @@ namespace ErosionFinder
                 ws.LoadMetadataForReferencedProjects = true;
 
                 var solution = await ws.OpenSolutionAsync(solutionFilePath,
-                   msbuildLogger: buildLogger,
+                   msbuildLogger: new BuildLogger(),
                    cancellationToken: cancellationToken);
 
                 RegisterWorkspaceDiagnostics(ws.Diagnostics);
@@ -113,7 +95,7 @@ namespace ErosionFinder
             }
         }
 
-        private void RegisterWorkspaceDiagnostics(
+        private static void RegisterWorkspaceDiagnostics(
             IImmutableList<WorkspaceDiagnostic> diagnostics)
         {
             if (diagnostics == null)
@@ -121,28 +103,28 @@ namespace ErosionFinder
                 return;
             }
 
-            logger.LogDebug("{DiagnosticsCount} diagnostic messages retrieved "
-                + "at solution opening process", diagnostics.Count);
+            Trace.WriteLine(string.Format("{0} diagnostic messages retrieved "
+                + "at solution opening process", diagnostics.Count));
 
             foreach (var diagnostic in diagnostics)
             {
                 if (diagnostic.Kind == WorkspaceDiagnosticKind.Failure)
                 {
-                    logger.LogDebug("Failure at solution opening: "
-                        + "{DiagnosticMessage}", diagnostic.Message);
+                    Trace.WriteLine(string.Format("Failure at solution opening: "
+                        + "{0}", diagnostic.Message));
                 }
                 else if (diagnostic.Kind == WorkspaceDiagnosticKind.Warning)
                 {
-                    logger.LogDebug("Warning at solution opening: "
-                        + "{DiagnosticMessage}", diagnostic.Message);
+                    Trace.WriteLine(string.Format("Warning at solution opening: "
+                        + "{0}", diagnostic.Message));
                 }
             }
         }
 
-        private async Task<CodeFile> GetCodeFileBySyntaxAsync(
+        private static async Task<CodeFile> GetCodeFileBySyntaxAsync(
             Document document, CancellationToken cancellationToken)
         {
-            var documentWalker = new DocumentWalker(loggerFactory);
+            var documentWalker = new DocumentWalker();
 
             if (cancellationToken.IsCancellationRequested)
             {
@@ -160,7 +142,7 @@ namespace ErosionFinder
             };
         }
 
-        private async Task<DocumentWithExcludedListCheck> GetDocumentsWithExcludedListCheckAsync(
+        private static async Task<DocumentWithExcludedListCheck> GetDocumentsWithExcludedListCheckAsync(
             Document document, CancellationToken cancellationToken)
         {
             var isInExcludedList = await document

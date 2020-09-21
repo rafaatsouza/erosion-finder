@@ -1,18 +1,12 @@
 ﻿using Microsoft.Build.Framework;
-using Microsoft.Extensions.Logging;
 using System;
+using System.Diagnostics;
 
 namespace ErosionFinder.Logger
 {
     internal class BuildLogger : Microsoft.Build.Framework.ILogger
     {
-        private readonly Microsoft.Extensions.Logging.ILogger logger;
-
-        public BuildLogger(ILoggerFactory loggerFactory)
-        {
-            this.logger = loggerFactory?.CreateLogger<BuildLogger>()
-                ?? throw new ArgumentNullException(nameof(loggerFactory));
-        }
+        public BuildLogger() { }
 
         public LoggerVerbosity Verbosity 
         { 
@@ -28,13 +22,13 @@ namespace ErosionFinder.Logger
 
         public void Initialize(IEventSource eventSource)
         {
-            logger.LogTrace($"{GetLogPrefixMessage()}Initializing MSBuild logger");
+            Trace.WriteLine($"{GetTracePrefixMessage()}Initializing MSBuild recorder");
 
             eventSource.TargetStarted += (sender, evt) =>
-                logger.LogDebug($"{GetLogPrefixMessage()}{evt.TargetName} started");
+                Trace.WriteLine($"{GetTracePrefixMessage()}{evt.TargetName} started");
 
             eventSource.TargetFinished += (sender, evt) =>
-                logger.LogDebug($"{GetLogPrefixMessage()}{evt.TargetName} finished");
+                Trace.WriteLine($"{GetTracePrefixMessage()}{evt.TargetName} finished");
 
             eventSource.WarningRaised += (sender, evt) =>
             {
@@ -43,7 +37,7 @@ namespace ErosionFinder.Logger
                 warningLogMessage += $"error associated with lines {evt.LineNumber}-{evt.EndLineNumber}; Sender: {evt.SenderName}. ";
                 warningLogMessage += $"Code error: {evt.Code}; message: '{evt.Message}'";
 
-                logger.LogWarning($"{GetLogPrefixMessage()}{warningLogMessage}");
+                Trace.TraceWarning($"{GetTracePrefixMessage()}{warningLogMessage}");
             };
 
             eventSource.ErrorRaised += (sender, evt) =>
@@ -53,23 +47,21 @@ namespace ErosionFinder.Logger
                 errorLogMessage += $"error associated with lines {evt.LineNumber}-{evt.EndLineNumber}; Sender: {evt.SenderName}. ";
                 errorLogMessage += $"Code error: {evt.Code}; message: '{evt.Message}'";
 
-                logger.LogCritical($"{GetLogPrefixMessage()}{errorLogMessage}");
+                Trace.Fail($"{GetTracePrefixMessage()}{errorLogMessage}");
             };
 
             eventSource.MessageRaised += (sender, evt) =>
             {
-                var logMessage = $"{GetLogPrefixMessage()}{evt.Message}";
+                var logMessage = $"{GetTracePrefixMessage()}{evt.Message}";
 
                 switch (evt.Importance)
                 {
                     case MessageImportance.High:
-                        logger.LogInformation(logMessage);
-                        break;
                     case MessageImportance.Normal:
-                        logger.LogDebug(logMessage);
+                        Trace.TraceInformation(logMessage);
                         break;
                     default:
-                        logger.LogTrace(logMessage);
+                        Trace.WriteLine(logMessage);
                         break;
                 }
             };
@@ -77,9 +69,10 @@ namespace ErosionFinder.Logger
 
         public void Shutdown() 
         {
-            logger.LogTrace($"{GetLogPrefixMessage()}Shutting down MSBuild logger");
+            Trace.WriteLine($"{GetTracePrefixMessage()}Shutting down MSBuild recorder");
         }
 
-        private string GetLogPrefixMessage() => $"[{nameof(BuildLogger)}] - ";
+        private string GetTracePrefixMessage() 
+            => $"[MSBuild solution compiling events] - ";
     }
 }
