@@ -193,8 +193,7 @@ namespace ErosionFinder.Tests
         {
             var originLayer = "Origin";
             var targetLayer = "Target";
-            var thirdLayer = "Third";
-
+            
             var originNamespace = "Test.Origin";
             var targetNamespace = "Test.Target";
             var thirdNamespace = "Test.Third";
