@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ErosionFinder.Data.Converte
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ErosionFinder.Data", "ErosionFinder.Data\ErosionFinder.Data.csproj", "{A48BECFF-137B-4AE6-A0A7-AAF70D2760C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ErosionFinder.Tests", "ErosionFinder.Tests\ErosionFinder.Tests.csproj", "{2882921E-369D-4C8E-8A8A-9E9C234118CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{A48BECFF-137B-4AE6-A0A7-AAF70D2760C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A48BECFF-137B-4AE6-A0A7-AAF70D2760C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A48BECFF-137B-4AE6-A0A7-AAF70D2760C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2882921E-369D-4C8E-8A8A-9E9C234118CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2882921E-369D-4C8E-8A8A-9E9C234118CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2882921E-369D-4C8E-8A8A-9E9C234118CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2882921E-369D-4C8E-8A8A-9E9C234118CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

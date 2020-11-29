@@ -18,5 +18,11 @@ namespace ErosionFinder.Data.Models
         /// Architectural planned rules
         /// </summary>
         public IEnumerable<ArchitecturalRule> Rules { get; set; }
+
+        public ArchitecturalConstraints()
+        {
+            Layers = new Dictionary<string, NamespacesGroupingMethod>();
+            Rules = new List<ArchitecturalRule>();
+        }
     }
 }

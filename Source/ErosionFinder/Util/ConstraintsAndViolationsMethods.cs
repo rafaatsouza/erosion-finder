@@ -53,24 +53,24 @@ namespace ErosionFinder.Util
                     || rule.RuleOperator == RuleOperator.OnlyNeedToRelate)
                 {
                     violatingStructures = originStructures
-                        .Where(s => !s.Relations.Any(r => targetNamespaces.Any(n => n.Equals(r.Target))));
+                        .Where(s => !(s.Relations?.Any(r => targetNamespaces.Any(n => n.Equals(r.Target))) ?? false));
 
                     if (rule.RuleOperator == RuleOperator.OnlyNeedToRelate)
                     {
                         violatingStructures = violatingStructures
                             .Concat(anotherStructures.
-                                Where(s => s.Relations.Any(r => targetNamespaces.Any(n => n.Equals(r.Target)))));
+                                Where(s => (s.Relations?.Any(r => targetNamespaces.Any(n => n.Equals(r.Target)))) ?? false));
                     }
                 }
                 else if (rule.RuleOperator == RuleOperator.OnlyCanRelate)
                 {
                     violatingStructures = anotherStructures.
-                        Where(s => s.Relations.Any(r => targetNamespaces.Any(n => n.Equals(r.Target))));
+                        Where(s => (s.Relations?.Any(r => targetNamespaces.Any(n => n.Equals(r.Target))) ?? false));
                 }
                 else if (rule.RuleOperator == RuleOperator.CanNotRelate)
                 {
                     violatingStructures = originStructures
-                        .Where(s => s.Relations.Any(r => targetNamespaces.Any(n => n.Equals(r.Target))));
+                        .Where(s => (s.Relations?.Any(r => targetNamespaces.Any(n => n.Equals(r.Target))) ?? false));
                 }
 
                 if (violatingStructures?.Any() ?? false)
