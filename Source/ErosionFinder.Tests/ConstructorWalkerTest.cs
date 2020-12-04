@@ -1,7 +1,7 @@
 using ErosionFinder.Dtos;
 using ErosionFinder.SyntaxWalkers;
 using ErosionFinder.Tests.Dtos;
-using Microsoft.Build.Locator;
+using ErosionFinder.Tests.Fixture;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -12,24 +12,15 @@ using Xunit;
 
 namespace ErosionFinder.Tests
 {
+    [Collection("MSBuildCollection")]
     public class ConstructorWalkerTest
     {
-        public ConstructorWalkerTest()
-        {
-            if (!MSBuildLocator.IsRegistered)
-            {
-                MSBuildLocator.RegisterDefaults();
-            }
-
-            Assert.True(MSBuildLocator.IsRegistered);
-        }
-
         [Fact]
         [Trait(nameof(ConstructorWalker.VisitParameter), "Success: GetsReceiptByConstructorArgument")]
         public void ConstructorWalker_VisitParameter_Success_GetsReceiptByConstructorArgument()
         {
             var programText = @"
-            namespace HelloWorld
+            namespace TestCompilation
             {
                 public class Program
                 {
@@ -52,6 +43,7 @@ namespace ErosionFinder.Tests
             Assert.Single(relations);
             Assert.Equal(RelationType.ReceiptByConstructorArgument, 
                 relations.Single().RelationType);
+            Assert.Equal("TestCompilation", relations.Single().Target);
             Assert.Single(relations.Single().Components);
             Assert.Equal("CodeComponent", relations.Single().Components.Single());
         }
@@ -61,7 +53,7 @@ namespace ErosionFinder.Tests
         public void ConstructorWalker_VisitParameter_Success_EmptyRelations()
         {
             var programText = @"
-            namespace HelloWorld
+            namespace TestCompilation
             {
                 public class Component
                 {
@@ -89,7 +81,7 @@ namespace ErosionFinder.Tests
                 .OfType<ClassDeclarationSyntax>().First();
             
             var walker = new ConstructorWalker(syntaxAnalysis.Model, 
-                classDeclarationNode, "HelloWorld");
+                classDeclarationNode, "TestCompilation");
 
             return walker.GetRelations(root);
         }
