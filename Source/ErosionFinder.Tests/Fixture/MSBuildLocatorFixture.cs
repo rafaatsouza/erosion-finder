@@ -8,17 +8,14 @@ namespace ErosionFinder.Tests.Fixture
     {
         public MSBuildLocatorFixture()
         {
-            Console.WriteLine("a");
             if (MSBuildLocator.CanRegister)
             {
-                Console.WriteLine("b");
                 MSBuildLocator.RegisterDefaults();
             }
         }
 
         public void Dispose()
         {
-            Console.WriteLine("c");
             MSBuildLocator.Unregister();
             GC.SuppressFinalize(this);
         }
