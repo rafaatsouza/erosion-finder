@@ -1,13 +1,7 @@
 using ErosionFinder.Dtos;
 using ErosionFinder.SyntaxWalkers;
-using ErosionFinder.Tests.Dtos;
 using ErosionFinder.Tests.Fixture;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using ErosionFinder.Tests.Util;
 using Xunit;
 
 namespace ErosionFinder.Tests
@@ -29,23 +23,9 @@ namespace ErosionFinder.Tests
                 { }
             }";
 
-            var syntaxAnalysis = new SyntaxAnalysisTestComponent(programText);
-
-            var root = syntaxAnalysis.Tree.GetCompilationUnitRoot();
-
-            var classDeclarationNode = root.DescendantNodes()
-                .OfType<ClassDeclarationSyntax>().First();
-            
-            var walker = new BaseListWalker(syntaxAnalysis.Model, 
-                classDeclarationNode, "TestCompilation");
-
-            var relations = walker.GetRelations(root);
-
-            Assert.Single(relations);
-            Assert.Equal(RelationType.Inheritance, 
-                relations.Single().RelationType);
-            Assert.Single(relations.Single().Components);
-            Assert.Equal("CodeComponent", relations.Single().Components.Single());
+            CommonAssert.AssertSingleRelationAndSingleComponentByProgramText(
+                programText, RelationType.Inheritance, "TestCompilation", "CodeComponent",
+                (model, classDeclaration) => new BaseListWalker(model, classDeclaration, "TestCompilation"));
         }
     }
 }
