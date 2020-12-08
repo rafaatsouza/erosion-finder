@@ -25,7 +25,8 @@ namespace ErosionFinder.SyntaxWalkers
             memberRelations = new List<Relation>();
         }
 
-        public Structure GetStructure(MemberDeclarationSyntax member, string baseMemberNamespace)
+        public Structure GetStructure(
+            MemberDeclarationSyntax member, string baseMemberNamespace)
         {
             BaseMemberDeclaration = member;
             BaseMemberNamespace = baseMemberNamespace;
