@@ -27,7 +27,7 @@ namespace ErosionFinder
         /// <param name="solutionFilePath">Solution file path</param>
         /// <param name="constraints">Set of architectural constraints</param>
         /// <returns>List of architectural violations</returns>
-        public static async Task<IEnumerable<Violation>> GetViolationsBySolutionFilePathAndConstraintsAsync(
+        public static Task<IEnumerable<Violation>> GetViolationsBySolutionFilePathAndConstraintsAsync(
             string solutionFilePath, ArchitecturalConstraints constraints, 
             CancellationToken cancellationToken)
         {
@@ -44,6 +44,14 @@ namespace ErosionFinder
 
             ConstraintsAndViolationsMethods.CheckConstraints(constraints);
 
+            return ExecuteGetViolationsBySolutionFilePathAndConstraintsAsync(
+                solutionFilePath, constraints, cancellationToken);
+        }
+
+        private static async Task<IEnumerable<Violation>> ExecuteGetViolationsBySolutionFilePathAndConstraintsAsync(
+            string solutionFilePath, ArchitecturalConstraints constraints, 
+            CancellationToken cancellationToken)
+        {
             var codeFiles = await GetCodeFilesBySolutionFilePathAsync(
                 solutionFilePath, cancellationToken);
 
@@ -58,7 +66,7 @@ namespace ErosionFinder
                 solutionFilePath, cancellationToken);
 
             var getCodeFiles = documents
-                .Select(document => GetCodeFileBySyntaxAsync(document, cancellationToken));
+                .Select(d => GetCodeFileBySyntaxAsync(d, cancellationToken));
 
             return await Task.WhenAll(getCodeFiles);
         }
