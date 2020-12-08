@@ -13,6 +13,26 @@ namespace ErosionFinder.Tests.Util
 {
     internal static class CommonAssert
     {
+        public static void AssertGetStructureOfType<TStructureType>(string programText, 
+        StructureType structureType, string target, string component) where TStructureType : MemberDeclarationSyntax
+        {
+            var syntaxAnalysis = new SyntaxAnalysisTestComponent(programText);
+
+            var root = syntaxAnalysis.Tree.GetCompilationUnitRoot();
+
+            var structureDeclarationNode = root.DescendantNodes()
+                .OfType<TStructureType>().First();
+
+            var walker = new StructureWalker(syntaxAnalysis.Model);
+
+            var result = walker.GetStructure(
+                structureDeclarationNode, target);
+
+            Assert.NotNull(result);
+            Assert.Equal(structureType, result.Type);
+            Assert.Equal(component, result.Name);
+        }
+
         public static void AssertSingleRelationAndSingleComponentByProgramText(
             string programText, RelationType relationType, string target, string component,
             Func<SemanticModel, ClassDeclarationSyntax, RelationsRetrieverWalker> getWalker)
@@ -29,8 +49,7 @@ namespace ErosionFinder.Tests.Util
             Assert.Equal(component, relation.Components.Single());
         }
 
-        public static void AssertEmptyRelationByProgramText(
-            string programText, 
+        public static void AssertEmptyRelationByProgramText(string programText, 
             Func<SemanticModel, ClassDeclarationSyntax, RelationsRetrieverWalker> getWalker)
         {
             var relations = GetRelations(programText, getWalker);
