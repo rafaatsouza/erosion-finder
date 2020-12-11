@@ -12,9 +12,9 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v1.7.2
         with:
-          dotnet-version: 3.1.402
+          dotnet-version: 5.0.101
 
       - name: Install dependencies
         run: dotnet restore Source/
@@ -23,21 +23,21 @@ jobs:
         run: dotnet build Source/ --configuration Release --no-restore
       
       - name: Publish ErosionFinder.Data
-        uses: brandedoutcast/publish-nuget@v2.5.2
+        uses: brandedoutcast/publish-nuget@v2.5.5
         with:
             PROJECT_FILE_PATH: Source/ErosionFinder.Data/ErosionFinder.Data.csproj
             PACKAGE_NAME: ErosionFinder.Data
             NUGET_KEY: ${{secrets.NUGET_API_KEY}}
 
       - name: Publish ErosionFinder
-        uses: brandedoutcast/publish-nuget@v2.5.2
+        uses: brandedoutcast/publish-nuget@v2.5.5
         with:
             PROJECT_FILE_PATH: Source/ErosionFinder/ErosionFinder.csproj
             PACKAGE_NAME: ErosionFinder
             NUGET_KEY: ${{secrets.NUGET_API_KEY}}
 
       - name: Publish ErosionFinder.Data.Converter
-        uses: brandedoutcast/publish-nuget@v2.5.2
+        uses: brandedoutcast/publish-nuget@v2.5.5
         with:
             PROJECT_FILE_PATH: Source/ErosionFinder.Data.Converter/ErosionFinder.Data.Converter.csproj
             PACKAGE_NAME: ErosionFinder.Data.Converter
