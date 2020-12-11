@@ -11,7 +11,7 @@ Icon made by Freepik, from https://www.flaticon.com/
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/rafaatsouza/erosion-finder</PackageProjectUrl>
     <PackageTags>architectural-analysis, architectural-erosion, roslyn, architect, arch</PackageTags>
-    <Version>1.2.1</Version>
+    <Version>1.3.0</Version>
     <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
@@ -20,13 +20,13 @@ Icon made by Freepik, from https://www.flaticon.com/
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Build.Framework" Version="16.6.0" ExcludeAssets="runtime" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.6.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="3.6.0" />
-    <PackageReference Include="NuGet.Frameworks" Version="5.7.0" />
-    <PackageReference Include="NuGet.Packaging" Version="5.7.0" />
-    <PackageReference Include="NuGet.ProjectModel" Version="5.7.0" />
-    <PackageReference Include="NuGet.Versioning" Version="5.7.0" />
+    <PackageReference Include="Microsoft.Build.Framework" Version="16.8.0" ExcludeAssets="runtime" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.8.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="3.8.0" />
+    <PackageReference Include="NuGet.Frameworks" Version="5.8.0" />
+    <PackageReference Include="NuGet.Packaging" Version="5.8.0" />
+    <PackageReference Include="NuGet.ProjectModel" Version="5.8.0" />
+    <PackageReference Include="NuGet.Versioning" Version="5.8.0" />
   </ItemGroup>
 
   <ItemGroup>
