@@ -2,7 +2,7 @@ name: test-api
 
 on:
   pull_request:
-    branches: [ master ]
+    branches: [ main, master ]
 
 jobs:
   build:
@@ -13,9 +13,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v1.7.2
         with:
-          dotnet-version: 3.1.402
+          dotnet-version: 5.0.101
 
       - name: Install dependencies
         run: dotnet restore Source/
