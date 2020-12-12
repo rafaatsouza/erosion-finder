@@ -1,4 +1,4 @@
-name: test-api
+name: unit-test
 
 on:
   pull_request:

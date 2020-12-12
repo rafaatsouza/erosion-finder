@@ -1,6 +1,6 @@
 <a href="icon.png"><img width="42px" height="42px" src="icon.png" /></a> ErosionFinder
 ==================================
-
+![unit-test](https://github.com/rafaatsouza/erosion-finder/workflows/unit-test/badge.svg)
 [![NuGet version (ErosionFinder)](https://img.shields.io/nuget/v/ErosionFinder.svg)](https://www.nuget.org/packages/ErosionFinder/)
 
 ErosionFinder is a library to find architectural erosion across C# code; it uses the Roslyn API to navigate throught all components from some C# solution, and checks for architectural violations based on informed rules.
