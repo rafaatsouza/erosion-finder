@@ -52,89 +52,17 @@ namespace ErosionFinder
             string solutionFilePath, ArchitecturalConstraints constraints, 
             CancellationToken cancellationToken)
         {
-            var codeFiles = await GetCodeFilesBySolutionFilePathAsync(
-                solutionFilePath, cancellationToken);
-
-            return ConstraintsAndViolationsMethods.GetViolations(
-                constraints, codeFiles, cancellationToken);
-        }
-
-        private static async Task<IEnumerable<CodeFile>> GetCodeFilesBySolutionFilePathAsync(
-            string solutionFilePath, CancellationToken cancellationToken)
-        {
-            var documents = await GetDocumentsAsync(
-                solutionFilePath, cancellationToken);
+            var documents = await MSBuildWorkspaceMethods
+                .GetDocumentsAsync(solutionFilePath, cancellationToken);
 
             var getCodeFiles = documents
                 .Select(d => GetCodeFileBySyntaxAsync(d, cancellationToken));
 
-            return await Task.WhenAll(getCodeFiles);
-        }
+            var codeFiles = await Task.WhenAll(getCodeFiles);
 
-        private static async Task<IEnumerable<Document>> GetDocumentsAsync(
-            string solutionFilePath, CancellationToken cancellationToken)
-        {
-            using (var ws = MSBuildWorkspace.Create())
-            {
-                ws.LoadMetadataForReferencedProjects = true;
-
-                var solution = await ws.OpenSolutionAsync(solutionFilePath,
-                   msbuildLogger: new BuildLogger(),
-                   cancellationToken: cancellationToken);
-
-                RegisterWorkspaceDiagnostics(ws.Diagnostics);
-
-                if (!solution.Projects.Any())
-                {
-                    throw new SolutionException(
-                        SolutionError.SolutionWithoutProjects);
-                }
-
-                var checkDocuments = solution.Projects
-                    .SelectMany(p => p.Documents)
-                    .Select(document => GetDocumentsWithExcludedListCheckAsync(document, cancellationToken));
-
-                var documentsWithExcludedListCheck = await Task.WhenAll(checkDocuments);
-                
-                var documents = documentsWithExcludedListCheck
-                    .Where(d => !d.IsInExcludedList)
-                    .Select(d => d.Document);
-
-                if (!documents.Any())
-                {
-                    throw new SolutionException(
-                        SolutionError.SolutionWithoutCodeFiles);
-                }
-
-                return documents;
-            }
-        }
-
-        private static void RegisterWorkspaceDiagnostics(
-            IImmutableList<WorkspaceDiagnostic> diagnostics)
-        {
-            if (diagnostics == null)
-            {
-                return;
-            }
-
-            Trace.WriteLine(string.Format("{0} diagnostic messages retrieved "
-                + "at solution opening process", diagnostics.Count));
-
-            foreach (var diagnostic in diagnostics)
-            {
-                if (diagnostic.Kind == WorkspaceDiagnosticKind.Failure)
-                {
-                    Trace.WriteLine(string.Format("Failure at solution opening: "
-                        + "{0}", diagnostic.Message));
-                }
-                else if (diagnostic.Kind == WorkspaceDiagnosticKind.Warning)
-                {
-                    Trace.WriteLine(string.Format("Warning at solution opening: "
-                        + "{0}", diagnostic.Message));
-                }
-            }
-        }
+            return ConstraintsAndViolationsMethods.GetViolations(
+                constraints, codeFiles, cancellationToken);
+        }    
 
         private static async Task<CodeFile> GetCodeFileBySyntaxAsync(
             Document document, CancellationToken cancellationToken)
@@ -142,9 +70,7 @@ namespace ErosionFinder
             var documentWalker = new DocumentWalker();
 
             if (cancellationToken.IsCancellationRequested)
-            {
                 return null;
-            }
 
             await documentWalker.VisitDocumentAsync(
                 document, cancellationToken);
@@ -154,19 +80,6 @@ namespace ErosionFinder
                 FileName = document.Name,
                 FilePath = document.FilePath,
                 Structures = documentWalker.Structures
-            };
-        }
-
-        private static async Task<DocumentWithExcludedListCheck> GetDocumentsWithExcludedListCheckAsync(
-            Document document, CancellationToken cancellationToken)
-        {
-            var isInExcludedList = await document
-                .IsInExcludedListAsync(cancellationToken);
-
-            return new DocumentWithExcludedListCheck()
-            {
-                Document = document,
-                IsInExcludedList = isInExcludedList
             };
         }
     }
