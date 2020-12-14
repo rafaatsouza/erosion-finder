@@ -56,7 +56,7 @@ namespace ErosionFinder
                 .GetDocumentsAsync(solutionFilePath, cancellationToken);
 
             var getCodeFiles = documents
-                .Select(d => GetCodeFileBySyntaxAsync(d, cancellationToken));
+                .Select(d => GetCodeFileByDocumentAsync(d, cancellationToken));
 
             var codeFiles = await Task.WhenAll(getCodeFiles);
 
@@ -64,7 +64,7 @@ namespace ErosionFinder
                 constraints, codeFiles, cancellationToken);
         }    
 
-        private static async Task<CodeFile> GetCodeFileBySyntaxAsync(
+        private static async Task<CodeFile> GetCodeFileByDocumentAsync(
             Document document, CancellationToken cancellationToken)
         {
             var documentWalker = new DocumentWalker();
