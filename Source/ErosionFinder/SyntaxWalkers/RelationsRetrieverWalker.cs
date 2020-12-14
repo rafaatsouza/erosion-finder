@@ -47,13 +47,13 @@ namespace ErosionFinder.SyntaxWalkers
 
         protected bool ItsFromSameMember(SyntaxNode node)
         {
-            var findClass = node.FindTypeInParents<ClassDeclarationSyntax>(
+            var foundClass = node.TryFindTypeInParents<ClassDeclarationSyntax>(
                 out var classDeclaration);
-            var findInterface = node.FindTypeInParents<InterfaceDeclarationSyntax>(
+            var foundInterface = node.TryFindTypeInParents<InterfaceDeclarationSyntax>(
                 out var interfaceDeclaration);
 
-            return (findClass && classDeclaration.Identifier.ValueText == baseMemberName)
-                || (findInterface && interfaceDeclaration.Identifier.ValueText == baseMemberName);
+            return (foundClass && classDeclaration.Identifier.ValueText == baseMemberName)
+                || (foundInterface && interfaceDeclaration.Identifier.ValueText == baseMemberName);
         }
 
         protected void IncrementsRelationsFromExpressionAndCheckGenerics(

@@ -4,7 +4,7 @@ namespace ErosionFinder.Extensions
 {
     internal static class SyntaxNodeExtensions
     {
-        public static bool FindTypeInParents<T>(
+        public static bool TryFindTypeInParents<T>(
             this SyntaxNode node, out T element) where T : class
         {
             if (node is T castedElement)
@@ -14,7 +14,7 @@ namespace ErosionFinder.Extensions
             }
             else if (node.Parent != null)
             {
-                var found = FindTypeInParents<T>(node.Parent, 
+                var found = TryFindTypeInParents<T>(node.Parent, 
                     out var foundElement);
 
                 element = found ? foundElement : null;

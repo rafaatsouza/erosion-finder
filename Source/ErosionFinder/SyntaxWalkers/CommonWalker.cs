@@ -16,8 +16,8 @@ namespace ErosionFinder.SyntaxWalkers
         {
             if (ItsFromSameMember(node))
             {
-                if (node.FindTypeInParents<ThrowExpressionSyntax>(out _)
-                    || node.FindTypeInParents<ThrowStatementSyntax>(out _))
+                if (node.TryFindTypeInParents<ThrowExpressionSyntax>(out _)
+                    || node.TryFindTypeInParents<ThrowStatementSyntax>(out _))
                 {
                     IncrementsRelationsFromExpressionAndCheckGenerics(
                         node.Type, RelationType.Throw);
