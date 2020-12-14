@@ -11,7 +11,7 @@ namespace ErosionFinder.SyntaxWalkers
 {
     internal class DocumentWalker : CSharpSyntaxWalker
     {
-        public ICollection<Structure> Structures { get; set; }
+        public ICollection<Structure> Structures { get; private set; }
         private ICollection<string> Usings { get; set; }
         private SemanticModel SemanticModel { get; set; }
 
@@ -24,9 +24,11 @@ namespace ErosionFinder.SyntaxWalkers
         public async Task VisitDocumentAsync(Document document, 
             CancellationToken cancellationToken)
         {
-            var rootNode = await document.GetSyntaxRootAsync(cancellationToken);
+            var rootNode = await document
+                .GetSyntaxRootAsync(cancellationToken);
             
-            SemanticModel = await document.GetSemanticModelAsync(cancellationToken);
+            SemanticModel = await document
+                .GetSemanticModelAsync(cancellationToken);
 
             if (!cancellationToken.IsCancellationRequested)
             {
@@ -63,16 +65,20 @@ namespace ErosionFinder.SyntaxWalkers
         {
             var walker = new StructureWalker(SemanticModel);
 
-            var structure = walker.GetStructure(member, namespaceIdentifier);
+            var structure = walker.GetStructure(
+                member, namespaceIdentifier);
 
             structure.References = Usings;
             structure.Namespace = namespaceIdentifier;
 
             Structures.Add(structure);
 
-            SearchInsideStructures<ClassDeclarationSyntax>(member, namespaceIdentifier);
-            SearchInsideStructures<InterfaceDeclarationSyntax>(member, namespaceIdentifier);
-            SearchInsideStructures<EnumDeclarationSyntax>(member, namespaceIdentifier);
+            SearchInsideStructures<ClassDeclarationSyntax>(
+                member, namespaceIdentifier);
+            SearchInsideStructures<InterfaceDeclarationSyntax>(
+                member, namespaceIdentifier);
+            SearchInsideStructures<EnumDeclarationSyntax>(
+                member, namespaceIdentifier);
         }
 
         private string GetNamespaceIdentifier(SyntaxNode node)
@@ -81,7 +87,8 @@ namespace ErosionFinder.SyntaxWalkers
         private void SearchInsideStructures<T>(
             MemberDeclarationSyntax memberDeclaration, string namespaceIdentifier)
         {
-            var insideStructures = memberDeclaration.DescendantNodes().OfType<T>();
+            var insideStructures = memberDeclaration
+                .DescendantNodes().OfType<T>();
 
             if (insideStructures.Any())
             {
@@ -89,7 +96,8 @@ namespace ErosionFinder.SyntaxWalkers
                 {
                     if (insideStructure is MemberDeclarationSyntax insideMember)
                     {
-                        FillStructureCollection(insideMember, namespaceIdentifier);
+                        FillStructureCollection(
+                            insideMember, namespaceIdentifier);
                     }
                 }
             }
