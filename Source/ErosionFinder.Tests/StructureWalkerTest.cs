@@ -22,7 +22,7 @@ namespace ErosionFinder.Tests
                 { }
             }";
 
-            CommonAssert.AssertGetStructureOfType<ClassDeclarationSyntax>(
+            CommonAsserts.AssertGetStructureOfType<ClassDeclarationSyntax>(
                 programText, StructureType.Class, "TestCompilation", "Program");
         }
 
@@ -37,7 +37,7 @@ namespace ErosionFinder.Tests
                 { }
             }";
 
-            CommonAssert.AssertGetStructureOfType<InterfaceDeclarationSyntax>(
+            CommonAsserts.AssertGetStructureOfType<InterfaceDeclarationSyntax>(
                 programText, StructureType.Interface, "TestCompilation", "IProgram");
         }
 
@@ -52,7 +52,7 @@ namespace ErosionFinder.Tests
                 { }
             }";
 
-            CommonAssert.AssertGetStructureOfType<EnumDeclarationSyntax>(
+            CommonAsserts.AssertGetStructureOfType<EnumDeclarationSyntax>(
                 programText, StructureType.Enum, "TestCompilation", "Program");
         }
     }

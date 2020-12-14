@@ -33,7 +33,7 @@ namespace ErosionFinder.Tests
                 }
             }";
 
-            CommonAssert.AssertSingleRelationAndSingleComponentByProgramText(
+            CommonAsserts.AssertSingleRelationAndSingleComponentByProgramText(
                 programText, RelationType.ReceiptByConstructorArgument, "TestCompilation", "CodeComponent",
                 (model, classDeclaration) => new ConstructorWalker(model, classDeclaration, "TestCompilation"));
         }
@@ -56,7 +56,7 @@ namespace ErosionFinder.Tests
                 }
             }";
 
-            CommonAssert.AssertEmptyRelationByProgramText(
+            CommonAsserts.AssertEmptyRelationByProgramText(
                 programText, 
                 (model, classDeclaration) => new ConstructorWalker(model, classDeclaration, "TestCompilation"));
         }

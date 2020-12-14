@@ -28,7 +28,7 @@ namespace ErosionFinder.Tests
                 }
             }";
 
-            CommonAssert.AssertSingleRelationAndSingleComponentByProgramText(
+            CommonAsserts.AssertSingleRelationAndSingleComponentByProgramText(
                 programText, RelationType.ReturnByFunction, "TestCompilation", "CodeComponent",
                 (model, classDeclaration) => new CommonWalker(model, classDeclaration, "TestCompilation"));
         }
@@ -52,7 +52,7 @@ namespace ErosionFinder.Tests
                 }
             }";
 
-            CommonAssert.AssertSingleRelationAndSingleComponentByProgramText(
+            CommonAsserts.AssertSingleRelationAndSingleComponentByProgramText(
                 programText, RelationType.ReceiptByMethodArgument, "TestCompilation", "CodeComponent",
                 (model, classDeclaration) => new CommonWalker(model, classDeclaration, "TestCompilation"));
         }
@@ -78,7 +78,7 @@ namespace ErosionFinder.Tests
                 }
             }";
 
-            CommonAssert.AssertSingleRelationAndSingleComponentByProgramText(
+            CommonAsserts.AssertSingleRelationAndSingleComponentByProgramText(
                 programText, RelationType.Declarate, "TestCompilation", "CodeComponent",
                 (model, classDeclaration) => new CommonWalker(model, classDeclaration, "TestCompilation"));
         }
@@ -102,7 +102,7 @@ namespace ErosionFinder.Tests
                 { }
             }";
 
-            CommonAssert.AssertSingleRelationAndSingleComponentByProgramText(
+            CommonAsserts.AssertSingleRelationAndSingleComponentByProgramText(
                 programText, RelationType.Throw, "TestCompilation", "CustomException",
                 (model, classDeclaration) => new CommonWalker(model, classDeclaration, "TestCompilation"));
         }
@@ -125,7 +125,7 @@ namespace ErosionFinder.Tests
                 }
             }";
 
-            CommonAssert.AssertSingleRelationAndSingleComponentByProgramText(
+            CommonAsserts.AssertSingleRelationAndSingleComponentByProgramText(
                 programText, RelationType.Instantiate, "TestCompilation", "CodeComponent",
                 (model, classDeclaration) => new CommonWalker(model, classDeclaration, "TestCompilation"));
         }
@@ -154,7 +154,7 @@ namespace ErosionFinder.Tests
                 }
             }";
 
-            CommonAssert.AssertSingleRelationAndSingleComponentByProgramText(
+            CommonAsserts.AssertSingleRelationAndSingleComponentByProgramText(
                 programText, RelationType.Invocate, "TestCompilation", "CodeComponent",
                 (model, classDeclaration) => new CommonWalker(model, classDeclaration, "TestCompilation"));
         }

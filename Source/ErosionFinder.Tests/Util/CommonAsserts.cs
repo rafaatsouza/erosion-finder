@@ -12,7 +12,7 @@ using Xunit;
 
 namespace ErosionFinder.Tests.Util
 {
-    internal static class CommonAssert
+    internal static class CommonAsserts
     {
         public static void AssertGetStructureOfType<TStructureType>(string programText, 
         StructureType structureType, string target, string component) where TStructureType : MemberDeclarationSyntax
