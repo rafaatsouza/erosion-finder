@@ -1,4 +1,5 @@
-﻿using ErosionFinder.Data.Exceptions.Base;
+﻿using ErosionFinder.Data.Models;
+using ErosionFinder.Data.Exceptions.Base;
 using ErosionFinder.Dtos;
 using ErosionFinder.Extensions;
 using Microsoft.CodeAnalysis;

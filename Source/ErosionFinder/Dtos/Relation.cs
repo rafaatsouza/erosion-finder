@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using ErosionFinder.Data.Models;
+using System.Collections.Generic;
 
 namespace ErosionFinder.Dtos
 {

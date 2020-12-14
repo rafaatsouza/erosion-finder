@@ -1,3 +1,4 @@
+using ErosionFinder.Data.Models;
 using ErosionFinder.Dtos;
 using ErosionFinder.SyntaxWalkers;
 using ErosionFinder.Tests.Dtos;

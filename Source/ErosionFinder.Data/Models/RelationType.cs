@@ -1,6 +1,6 @@
-﻿namespace ErosionFinder.Dtos
+﻿namespace ErosionFinder.Data.Models
 {
-    internal enum RelationType
+    public enum RelationType
     {
         /// <summary>
         /// Some components inherits from another component
@@ -44,7 +44,7 @@
 
         /// <summary>
         /// Some type is indirectly referenced; 
-        /// ex: SomeClass : AnotherClass<IndirectClass>
+        /// ex: SomeClass : "AnotherClass<IndirectClass>"
         /// </summary>
         Indirect = 9
     }
