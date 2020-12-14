@@ -24,4 +24,4 @@ jobs:
         run: dotnet build Source/ --configuration $config --no-restore
         
       - name: Test PR      
-        run: dotnet test Source/ --no-restore --no-build --configuration $config"
+        run: dotnet test Source/ --no-restore --no-build --configuration $config
