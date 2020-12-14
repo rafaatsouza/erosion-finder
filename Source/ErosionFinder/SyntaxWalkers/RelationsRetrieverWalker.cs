@@ -1,5 +1,6 @@
 ﻿using ErosionFinder.Data.Exceptions.Base;
 using ErosionFinder.Dtos;
+using ErosionFinder.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -44,36 +45,15 @@ namespace ErosionFinder.SyntaxWalkers
             return memberRelations;
         }
 
-        protected bool FindTypeInParents<T>(
-            SyntaxNode node, out T element) where T : class
-        {
-            if (node is T castedElement)
-            {
-                element = castedElement;
-                return true;
-            }
-            else if (node.Parent != null)
-            {
-                var found = FindTypeInParents<T>(node.Parent, out var foundElement);
-
-                element = found ? foundElement : null;
-
-                return found;
-            }
-
-            element = null;
-            return false;
-        }
-
         protected bool ItsFromSameMember(SyntaxNode node)
         {
-            var findClass = FindTypeInParents<ClassDeclarationSyntax>(
-                node, out var classDeclaration);
-            var findInterface = FindTypeInParents<InterfaceDeclarationSyntax>(
-                node, out var interfaceDeclaration);
+            var foundClass = node.TryFindTypeInParents<ClassDeclarationSyntax>(
+                out var classDeclaration);
+            var foundInterface = node.TryFindTypeInParents<InterfaceDeclarationSyntax>(
+                out var interfaceDeclaration);
 
-            return (findClass && classDeclaration.Identifier.ValueText == baseMemberName)
-                || (findInterface && interfaceDeclaration.Identifier.ValueText == baseMemberName);
+            return (foundClass && classDeclaration.Identifier.ValueText == baseMemberName)
+                || (foundInterface && interfaceDeclaration.Identifier.ValueText == baseMemberName);
         }
 
         protected void IncrementsRelationsFromExpressionAndCheckGenerics(

@@ -1,0 +1,27 @@
+name: unit-test
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      config: 'Release'
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1.7.2
+        with:
+          dotnet-version: 5.0.101
+
+      - name: Install dependencies
+        run: dotnet restore Source/
+
+      - name: Build
+        run: dotnet build Source/ --configuration $config --no-restore
+        
+      - name: Test PR      
+        run: dotnet test Source/ --no-restore --no-build --configuration $config"

@@ -1,4 +1,5 @@
 ﻿using ErosionFinder.Dtos;
+using ErosionFinder.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -15,8 +16,8 @@ namespace ErosionFinder.SyntaxWalkers
         {
             if (ItsFromSameMember(node))
             {
-                if (FindTypeInParents<ThrowExpressionSyntax>(node, out _)
-                    || FindTypeInParents<ThrowStatementSyntax>(node, out _))
+                if (node.TryFindTypeInParents<ThrowExpressionSyntax>(out _)
+                    || node.TryFindTypeInParents<ThrowStatementSyntax>(out _))
                 {
                     IncrementsRelationsFromExpressionAndCheckGenerics(
                         node.Type, RelationType.Throw);
