@@ -5,7 +5,7 @@ using ErosionFinder.Tests.Util;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Xunit;
 
-namespace ErosionFinder.Tests
+namespace ErosionFinder.SyntaxWalkers.Tests
 {
     [Collection("MSBuildCollection")]
     public class StructureWalkerTest

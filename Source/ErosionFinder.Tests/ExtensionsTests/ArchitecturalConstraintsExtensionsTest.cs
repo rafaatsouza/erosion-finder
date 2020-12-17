@@ -10,7 +10,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace ErosionFinder.Tests
+namespace ErosionFinder.Extensions.Tests
 {
     public class ArchitecturalConstraintsExtensionsTest
     {
