@@ -29,7 +29,8 @@ namespace ErosionFinder
             CancellationToken cancellationToken)
         {
             if (string.IsNullOrEmpty(solutionFilePath))
-                throw new ArgumentNullException(nameof(solutionFilePath));
+                throw new SolutionException(
+                    SolutionError.SolutionFileNotFound);
 
             var solutionFile = new FileInfo(solutionFilePath);
 
@@ -39,7 +40,7 @@ namespace ErosionFinder
                     SolutionError.SolutionFileNotFound);
             }
 
-            ConstraintsAndViolationsMethods.CheckConstraints(constraints);
+            constraints.CheckIfItsValid();
 
             return ExecuteGetViolationsBySolutionFilePathAndConstraintsAsync(
                 solutionFilePath, constraints, cancellationToken);
