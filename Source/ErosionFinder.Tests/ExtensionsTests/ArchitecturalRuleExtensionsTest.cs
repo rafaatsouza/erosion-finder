@@ -1,9 +1,5 @@
-using ErosionFinder.Extensions;
 using ErosionFinder.Data.Exceptions;
 using ErosionFinder.Data.Models;
-using System;
-using System.Linq;
-using System.Collections.Generic;
 using Xunit;
 
 namespace ErosionFinder.Extensions.Tests
