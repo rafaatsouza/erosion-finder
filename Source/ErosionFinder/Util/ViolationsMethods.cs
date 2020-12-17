@@ -8,15 +8,13 @@ using System.Threading.Tasks;
 
 namespace ErosionFinder.Util
 {
-    internal static class ConstraintsAndViolationsMethods
+    internal static class ViolationsMethods
     {
         private const int MaxDegreeOfParallelism = 10;
 
         public static IEnumerable<Violation> GetViolations(ArchitecturalConstraints constraints, 
             IEnumerable<CodeFile> codeFiles, CancellationToken cancellationToken)
         {
-            CheckConstraints(constraints);
-
             var violations = new List<Violation>();
             var structures = codeFiles.SelectMany(c => c.Structures);
             var namespaces = structures.Select(s => s.Namespace).Distinct();
@@ -88,51 +86,6 @@ namespace ErosionFinder.Util
             });
 
             return violations;
-        }
-
-        public static void CheckConstraints(ArchitecturalConstraints constraints)
-        {
-            if (constraints == null
-                || !constraints.Layers.Any()
-                || !constraints.Rules.Any())
-            {
-                throw new ConstraintsException(
-                    ConstraintsError.ConstraintsNullOrEmpty);
-            }
-
-            var originLayers = constraints.Rules
-                .Select(r => r.OriginLayer);
-
-            var targetLayers = constraints.Rules
-                .Select(r => r.TargetLayer);
-
-            var layersNotDefined = originLayers
-                .Concat(targetLayers)
-                .Distinct()
-                .Any(rl => !constraints.Layers.Any(l => l.Key.Equals(rl)));
-
-            if (layersNotDefined)
-            {
-                throw new ConstraintsException(
-                    ConstraintsError.LayerOfRuleNotDefined);
-            }
-
-            var explicitlyDefinedLayers = constraints.Layers
-                .Where(l => l.Value is NamespacesExplicitlyGrouped)
-                .Select(l => new KeyValuePair<string, NamespacesExplicitlyGrouped>(
-                    l.Key, (NamespacesExplicitlyGrouped)l.Value));
-
-            if (explicitlyDefinedLayers.Any())
-            {
-                foreach (var layer in explicitlyDefinedLayers)
-                {
-                    if (layer.Value.Namespaces == null || !layer.Value.Namespaces.Any())
-                    {
-                        throw new ConstraintsException(
-                            ConstraintsError.NamespaceNotFoundForLayer(layer.Key));
-                    }
-                } 
-            }
         }
 
         private static IEnumerable<LayerNamespaces> GetNamespacesForEachLayer(

@@ -4,7 +4,7 @@ using ErosionFinder.Tests.Fixture;
 using ErosionFinder.Tests.Util;
 using Xunit;
 
-namespace ErosionFinder.Tests
+namespace ErosionFinder.SyntaxWalkers.Tests
 {
     [Collection("MSBuildCollection")]
     public class BaseListWalkerTest
@@ -23,7 +23,7 @@ namespace ErosionFinder.Tests
                 { }
             }";
 
-            CommonAssert.AssertSingleRelationAndSingleComponentByProgramText(
+            CommonAsserts.AssertSingleRelationAndSingleComponentByProgramText(
                 programText, RelationType.Inheritance, "TestCompilation", "CodeComponent",
                 (model, classDeclaration) => new BaseListWalker(model, classDeclaration, "TestCompilation"));
         }

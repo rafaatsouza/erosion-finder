@@ -16,12 +16,14 @@ namespace ErosionFinder.Tests
         [Trait(nameof(ErosionFinderMethods.GetViolationsBySolutionFilePathAndConstraintsAsync), "Error_InvalidSolutionFilePath")]
         public async Task GetViolationsBySolutionFilePathAndConstraintsAsync_Error_InvalidSolutionFilePath()
         {
-            await Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            var result = await Assert.ThrowsAsync<SolutionException>(async () =>
             {
                 await ErosionFinderMethods
                     .GetViolationsBySolutionFilePathAndConstraintsAsync(
                         "", null, default);
             });
+
+            Assert.Equal(SolutionError.SolutionFileNotFound.Key, result.Key);
         }
 
         [Fact]
