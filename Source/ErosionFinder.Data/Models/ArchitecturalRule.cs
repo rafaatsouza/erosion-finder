@@ -1,4 +1,7 @@
-﻿namespace ErosionFinder.Data.Models
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace ErosionFinder.Data.Models
 {
     /// <summary>
     /// Rule about relation between two layers
@@ -19,5 +22,16 @@
         /// Name of the target layer
         /// </summary>
         public string TargetLayer { get; set; }
+        
+        /// <summary>
+        /// List of relation types which 
+        /// this rule should be applied to (optional)
+        /// </summary>
+        public IEnumerable<RelationType> RelationTypes { get; set; }
+
+        public bool HasParticularRelationTypes 
+        { 
+            get => RelationTypes != null && RelationTypes.Any();
+        }
     }
 }
