@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ErosionFinder.Util
 {
-    internal static class ConstraintsAndViolationsMethods
+    internal static class ViolationsMethods
     {
         private const int MaxDegreeOfParallelism = 10;
 

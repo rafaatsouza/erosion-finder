@@ -58,7 +58,7 @@ namespace ErosionFinder
 
             var codeFiles = await Task.WhenAll(getCodeFiles);
 
-            return ConstraintsAndViolationsMethods.GetViolations(
+            return ViolationsMethods.GetViolations(
                 constraints, codeFiles, cancellationToken);
         }    
 

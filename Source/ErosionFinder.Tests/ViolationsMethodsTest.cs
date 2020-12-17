@@ -13,10 +13,10 @@ using Xunit;
 
 namespace ErosionFinder.Tests
 {
-    public class ConstraintsAndViolationsMethodsTest
+    public class ViolationsMethodsTest
     {
         [Fact]
-        [Trait(nameof(ConstraintsAndViolationsMethods.GetViolations), "Error_NamespaceNotFoundForRegexDefinedLayer")]
+        [Trait(nameof(ViolationsMethods.GetViolations), "Error_NamespaceNotFoundForRegexDefinedLayer")]
         public void GetViolations_Error_NamespaceNotFoundForRegexDefinedLayer()
         {
             var originLayerRegex = new Regex(@"(Test)(.+)(\w*(Origin([s]{1})?)\b)");
@@ -47,7 +47,7 @@ namespace ErosionFinder.Tests
 
             var result = Assert.Throws<ConstraintsException>(() =>
             {
-                ConstraintsAndViolationsMethods.GetViolations(constraints, codeFiles, default);
+                ViolationsMethods.GetViolations(constraints, codeFiles, default);
             });
 
             Assert.Equal(nameof(ConstraintsError.NamespaceNotFoundForLayer), result.Key);
@@ -56,7 +56,7 @@ namespace ErosionFinder.Tests
         [Theory]
         [InlineData(RuleOperator.NeedToRelate)]
         [InlineData(RuleOperator.OnlyNeedToRelate)]
-        [Trait(nameof(ConstraintsAndViolationsMethods.GetViolations), "Success_NeedToRelate")]
+        [Trait(nameof(ViolationsMethods.GetViolations), "Success_NeedToRelate")]
         public void GetViolations_Success_NeedToRelate(RuleOperator ruleOperator)
         {
             var originLayer = "Origin";
@@ -92,7 +92,7 @@ namespace ErosionFinder.Tests
                 GetCodeFileWithSingleClassStructure(targetStructureName, targetNamespace, null, null)
             };
 
-            var violations = ConstraintsAndViolationsMethods.GetViolations(
+            var violations = ViolationsMethods.GetViolations(
                 constraints, codeFiles, default);
 
             Assert.NotNull(violations);
@@ -104,7 +104,7 @@ namespace ErosionFinder.Tests
         }    
 
         [Fact]
-        [Trait(nameof(ConstraintsAndViolationsMethods.GetViolations), "Success_OnlyCanRelate")]
+        [Trait(nameof(ViolationsMethods.GetViolations), "Success_OnlyCanRelate")]
         public void GetViolations_Success_OnlyCanRelate()
         {
             var originLayer = "Origin";
@@ -152,7 +152,7 @@ namespace ErosionFinder.Tests
                 thirdCodeFile
             };
 
-            var violations = ConstraintsAndViolationsMethods.GetViolations(
+            var violations = ViolationsMethods.GetViolations(
                 constraints, codeFiles, default);
 
             Assert.NotNull(violations);
@@ -163,7 +163,7 @@ namespace ErosionFinder.Tests
         }    
 
         [Fact]
-        [Trait(nameof(ConstraintsAndViolationsMethods.GetViolations), "Success_CanNotRelate")]
+        [Trait(nameof(ViolationsMethods.GetViolations), "Success_CanNotRelate")]
         public void GetViolations_Success_CanNotRelate()
         {
             var originLayer = "Origin";
@@ -208,7 +208,7 @@ namespace ErosionFinder.Tests
                 GetCodeFileWithSingleClassStructure(targetStructureName, targetNamespace, null, null)
             };
 
-            var violations = ConstraintsAndViolationsMethods.GetViolations(
+            var violations = ViolationsMethods.GetViolations(
                 constraints, codeFiles, default);
 
             Assert.NotNull(violations);
