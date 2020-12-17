@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace ErosionFinder.Extensions
 {
-    public static class ArchitecturalConstraintsExtensions
+    internal static class ArchitecturalConstraintsExtensions
     {
         public static void CheckIfItsValid(
             this ArchitecturalConstraints constraints)

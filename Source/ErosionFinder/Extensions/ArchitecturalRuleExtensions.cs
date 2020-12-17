@@ -3,7 +3,7 @@ using ErosionFinder.Data.Exceptions;
 
 namespace ErosionFinder.Extensions
 {
-    public static class ArchitecturalRuleExtensions
+    internal static class ArchitecturalRuleExtensions
     {
         public static void CheckIfItsValid(this ArchitecturalRule rule)
         {

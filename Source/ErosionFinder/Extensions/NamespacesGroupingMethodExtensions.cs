@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace ErosionFinder.Extensions
 {
-    public static class NamespacesGroupingMethodExtensions
+    internal static class NamespacesGroupingMethodExtensions
     {
         public static void CheckIfItsValid(
             this NamespacesExplicitlyGrouped explicitlyGrouped, string key)
