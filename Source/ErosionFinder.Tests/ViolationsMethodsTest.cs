@@ -1,14 +1,10 @@
 using ErosionFinder.Data.Exceptions;
-using ErosionFinder.Data.Exceptions.Base;
 using ErosionFinder.Data.Models;
 using ErosionFinder.Dtos;
 using ErosionFinder.Util;
-using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace ErosionFinder.Tests

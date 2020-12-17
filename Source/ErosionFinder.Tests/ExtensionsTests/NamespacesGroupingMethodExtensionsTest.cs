@@ -1,9 +1,6 @@
-using ErosionFinder.Extensions;
 using ErosionFinder.Data.Exceptions;
 using ErosionFinder.Data.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 using Xunit;
 

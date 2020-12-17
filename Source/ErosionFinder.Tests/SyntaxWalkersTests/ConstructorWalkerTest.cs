@@ -1,6 +1,4 @@
 using ErosionFinder.Dtos;
-using ErosionFinder.SyntaxWalkers;
-using ErosionFinder.Tests.Fixture;
 using ErosionFinder.Tests.Util;
 using Xunit;
 
