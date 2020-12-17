@@ -1,10 +1,5 @@
-using ErosionFinder;
 using ErosionFinder.Data.Exceptions;
-using ErosionFinder.Data.Exceptions.Base;
-using ErosionFinder.Data.Models;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 using Xunit;
 

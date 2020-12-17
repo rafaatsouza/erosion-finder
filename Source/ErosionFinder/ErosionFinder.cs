@@ -2,11 +2,9 @@
 using ErosionFinder.Data.Exceptions;
 using ErosionFinder.Dtos;
 using ErosionFinder.Extensions;
-using ErosionFinder.Logger;
 using ErosionFinder.SyntaxWalkers;
 using ErosionFinder.Util;
 using Microsoft.CodeAnalysis;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;

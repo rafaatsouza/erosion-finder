@@ -1,13 +1,6 @@
 using ErosionFinder.Data.Exceptions;
 using ErosionFinder.Data.Models;
-using ErosionFinder.Dtos;
-using ErosionFinder.Extensions;
-using ErosionFinder.Util;
-using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace ErosionFinder.Extensions.Tests
