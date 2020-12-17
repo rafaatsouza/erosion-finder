@@ -5,7 +5,7 @@ using ErosionFinder.Tests.Fixture;
 using ErosionFinder.Tests.Util;
 using Xunit;
 
-namespace ErosionFinder.Tests
+namespace ErosionFinder.SyntaxWalkers.Tests
 {
     [Collection("MSBuildCollection")]
     public class BaseListWalkerTest
