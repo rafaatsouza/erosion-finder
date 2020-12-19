@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace ErosionFinder.Dtos
 {
@@ -26,10 +27,12 @@ namespace ErosionFinder.Dtos
         /// List of references of the structure (the 'using' list)
         /// </summary>
         public IEnumerable<string> References { get; set; }
+            = Enumerable.Empty<string>();
 
         /// <summary>
         /// List of all relations retrieved from this structure
         /// </summary>
         public IEnumerable<Relation> Relations { get; set; }
+            = Enumerable.Empty<Relation>();
     }
 }

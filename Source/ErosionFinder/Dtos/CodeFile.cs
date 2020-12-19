@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace ErosionFinder.Dtos
 {
@@ -21,6 +22,7 @@ namespace ErosionFinder.Dtos
         /// List of structures contained inside the code file
         /// </summary>
         public IEnumerable<Structure> Structures { get; set; }
+            = Enumerable.Empty<Structure>();
 
         public override string ToString() => FileName;
     }

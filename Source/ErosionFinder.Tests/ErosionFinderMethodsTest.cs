@@ -7,7 +7,7 @@ namespace ErosionFinder.Tests
 {
     public class ErosionFinderMethodsTest
     {
-        [Fact]
+        [Fact(DisplayName = "ErosionFinderMethods GetViolationsBySolutionFilePathAndConstraintsAsync - Error - Invalid solution file path")]
         [Trait(nameof(ErosionFinderMethods.GetViolationsBySolutionFilePathAndConstraintsAsync), "Error_InvalidSolutionFilePath")]
         public async Task GetViolationsBySolutionFilePathAndConstraintsAsync_Error_InvalidSolutionFilePath()
         {
@@ -21,7 +21,7 @@ namespace ErosionFinder.Tests
             Assert.Equal(SolutionError.SolutionFileNotFound.Key, result.Key);
         }
 
-        [Fact]
+        [Fact(DisplayName = "ErosionFinderMethods GetViolationsBySolutionFilePathAndConstraintsAsync - Error - Solution not found")]
         [Trait(nameof(ErosionFinderMethods.GetViolationsBySolutionFilePathAndConstraintsAsync), "Error_SolutionNotFound")]
         public async Task GetViolationsBySolutionFilePathAndConstraintsAsync_Error_SolutionNotFound()
         {
