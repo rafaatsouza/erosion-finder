@@ -7,9 +7,9 @@ namespace ErosionFinder.Extensions.Tests
 {
     public class ArchitecturalConstraintsExtensionsTest
     {
-        [Fact]
-        [Trait(nameof(ArchitecturalConstraintsExtensions.CheckIfItsValid), "Error_ConstraintNull")]
-        public void CheckIfItsValid_Error_ConstraintNull()
+        [Fact(DisplayName = "ArchitecturalConstraintsExtensions CheckIfItsValid - Error: Null reference")]
+        [Trait(nameof(ArchitecturalConstraintsExtensions.CheckIfItsValid), "Error_NullReference")]
+        public void CheckIfItsValid_Error_NullReference()
         {
             ArchitecturalConstraints constraints = null;
 
@@ -21,7 +21,7 @@ namespace ErosionFinder.Extensions.Tests
             Assert.Equal(ConstraintsError.ConstraintsNullOrEmpty.Key, result.Key);
         }
 
-        [Fact]
+        [Fact(DisplayName = "ArchitecturalConstraintsExtensions CheckIfItsValid - Error: Empty constraint")]
         [Trait(nameof(ArchitecturalConstraintsExtensions.CheckIfItsValid), "Error_ConstraintEmpty")]
         public void CheckIfItsValid_Error_ConstraintEmpty()
         {
@@ -34,7 +34,7 @@ namespace ErosionFinder.Extensions.Tests
             Assert.Equal(ConstraintsError.ConstraintsNullOrEmpty.Key, result.Key);
         }
 
-        [Fact]
+        [Fact(DisplayName = "ArchitecturalConstraintsExtensions CheckIfItsValid - Error: Layers not defined")]
         [Trait(nameof(ArchitecturalConstraintsExtensions.CheckIfItsValid), "Error_LayersNotDefined")]
         public void CheckIfItsValid_Error_LayersNotDefined()
         {
@@ -63,7 +63,7 @@ namespace ErosionFinder.Extensions.Tests
             Assert.Equal(ConstraintsError.LayerOfRuleNotDefined.Key, result.Key);
         }
 
-        [Fact]
+        [Fact(DisplayName = "ArchitecturalConstraintsExtensions CheckIfItsValid - Error: Namespace not found for layer")]
         [Trait(nameof(ArchitecturalConstraintsExtensions.CheckIfItsValid), "Error_NamespaceNotFoundForLayer")]
         public void CheckIfItsValid_Error_NamespaceNotFoundForLayer()
         {

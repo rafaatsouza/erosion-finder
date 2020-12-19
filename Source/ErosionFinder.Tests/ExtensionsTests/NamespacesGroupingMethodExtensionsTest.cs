@@ -8,7 +8,7 @@ namespace ErosionFinder.Extensions.Tests
 {
     public class NamespacesGroupingMethodExtensionsTest
     {
-        [Fact]
+        [Fact(DisplayName = "NamespacesGroupingMethodExtensions CheckIfItsValid - ExplicitlyGrouped - Error: Null reference")]
         [Trait(nameof(NamespacesGroupingMethodExtensions.CheckIfItsValid), "ExplicitlyGrouped_Error_NullReference")]
         public void CheckIfItsValid_ExplicitlyGrouped_Error_NullReference()
         {
@@ -22,7 +22,7 @@ namespace ErosionFinder.Extensions.Tests
             Assert.Null(result);
         }
 
-        [Fact]
+        [Fact(DisplayName = "NamespacesGroupingMethodExtensions CheckIfItsValid - ExplicitlyGrouped - Error: Empty namespaces")]
         [Trait(nameof(NamespacesGroupingMethodExtensions.CheckIfItsValid), "ExplicitlyGrouped_Error_EmptyNamespaces")]
         public void CheckIfItsValid_ExplicitlyGrouped_Error_EmptyNamespaces()
         {
@@ -37,7 +37,7 @@ namespace ErosionFinder.Extensions.Tests
             Assert.Equal(ConstraintsError.NamespaceNotFoundForLayer(key).Key, result.Key);
         }
 
-        [Fact]
+        [Fact(DisplayName = "NamespacesGroupingMethodExtensions CheckIfItsValid - ExplicitlyGrouped - Success")]
         [Trait(nameof(NamespacesGroupingMethodExtensions.CheckIfItsValid), "ExplicitlyGrouped_Success")]
         public void CheckIfItsValid_ExplicitlyGrouped_Success()
         {
@@ -52,7 +52,7 @@ namespace ErosionFinder.Extensions.Tests
             Assert.Null(result);
         }
 
-        [Fact]
+        [Fact(DisplayName = "NamespacesGroupingMethodExtensions CheckIfItsValid - RegExGrouped - Error: Null reference")]
         [Trait(nameof(NamespacesGroupingMethodExtensions.CheckIfItsValid), "RegExGrouped_Error_NullReference")]
         public void CheckIfItsValid_RegExGrouped_Error_NullReference()
         {
@@ -66,7 +66,7 @@ namespace ErosionFinder.Extensions.Tests
             Assert.Null(result);
         }
 
-        [Fact]
+        [Fact(DisplayName = "NamespacesGroupingMethodExtensions CheckIfItsValid - RegExGrouped - Error: Empty namespaces")]
         [Trait(nameof(NamespacesGroupingMethodExtensions.CheckIfItsValid), "RegExGrouped_Error_EmptyNamespaces")]
         public void CheckIfItsValid_RegExGrouped_Error_EmptyNamespaces()
         {
@@ -82,7 +82,7 @@ namespace ErosionFinder.Extensions.Tests
             Assert.Equal(ConstraintsError.NamespaceNotFoundForLayer(key).Key, result.Key);
         }
 
-        [Fact]
+        [Fact(DisplayName = "NamespacesGroupingMethodExtensions CheckIfItsValid - RegExGrouped - Success")]
         [Trait(nameof(NamespacesGroupingMethodExtensions.CheckIfItsValid), "RegExGrouped_Success")]
         public void CheckIfItsValid_RegExGrouped_Success()
         {

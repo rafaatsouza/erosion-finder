@@ -7,7 +7,7 @@ namespace ErosionFinder.SyntaxWalkers.Tests
     [Collection("MSBuildCollection")]
     public class CommonWalkerTest
     {
-        [Fact]
+        [Fact(DisplayName = "CommonWalker VisitParameter - Success - Gets ReturnByFunction relation type")]
         [Trait(nameof(CommonWalker.VisitParameter), "Success: GetsReturnByFunction")]
         public void CommonWalker_VisitParameter_Success_GetsReturnByFunction()
         {
@@ -30,7 +30,7 @@ namespace ErosionFinder.SyntaxWalkers.Tests
                 (model, classDeclaration) => new CommonWalker(model, classDeclaration, "TestCompilation"));
         }
 
-        [Fact]
+        [Fact(DisplayName = "CommonWalker VisitParameter - Success - Gets ReceiptByMethodArgument relation type")]
         [Trait(nameof(CommonWalker.VisitParameter), "Success: GetsReceiptByMethodArgument")]
         public void CommonWalker_VisitParameter_Success_GetsReceiptByMethodArgument()
         {
@@ -54,7 +54,7 @@ namespace ErosionFinder.SyntaxWalkers.Tests
                 (model, classDeclaration) => new CommonWalker(model, classDeclaration, "TestCompilation"));
         }
 
-        [Fact]
+        [Fact(DisplayName = "CommonWalker VisitParameter - Success - Gets Declarate relation type")]
         [Trait(nameof(CommonWalker.VisitParameter), "Success: GetsDeclarate")]
         public void CommonWalker_VisitParameter_Success_GetsDeclarate()
         {
@@ -80,7 +80,7 @@ namespace ErosionFinder.SyntaxWalkers.Tests
                 (model, classDeclaration) => new CommonWalker(model, classDeclaration, "TestCompilation"));
         }
 
-        [Fact]
+        [Fact(DisplayName = "CommonWalker VisitParameter - Success - Gets Throw relation type")]
         [Trait(nameof(CommonWalker.VisitParameter), "Success: GetsThrow")]
         public void CommonWalker_VisitParameter_Success_GetsThrow()
         {
@@ -104,7 +104,7 @@ namespace ErosionFinder.SyntaxWalkers.Tests
                 (model, classDeclaration) => new CommonWalker(model, classDeclaration, "TestCompilation"));
         }
 
-        [Fact]
+        [Fact(DisplayName = "CommonWalker VisitParameter - Success - Gets Instantiate relation type")]
         [Trait(nameof(CommonWalker.VisitParameter), "Success: GetsInstantiate")]
         public void CommonWalker_VisitParameter_Success_GetsInstantiate()
         {
@@ -127,7 +127,7 @@ namespace ErosionFinder.SyntaxWalkers.Tests
                 (model, classDeclaration) => new CommonWalker(model, classDeclaration, "TestCompilation"));
         }
 
-        [Fact]
+        [Fact(DisplayName = "CommonWalker VisitParameter - Success - Gets Invocate relation type")]
         [Trait(nameof(CommonWalker.VisitParameter), "Success: GetsInvocate")]
         public void CommonWalker_VisitParameter_Success_GetsInvocate()
         {
@@ -153,6 +153,29 @@ namespace ErosionFinder.SyntaxWalkers.Tests
 
             CommonAsserts.AssertSingleRelationAndSingleComponentByProgramText(
                 programText, RelationType.Invocate, "TestCompilation", "CodeComponent",
+                (model, classDeclaration) => new CommonWalker(model, classDeclaration, "TestCompilation"));
+        }
+    
+        [Fact(DisplayName = "CommonWalker VisitParameter - Success - Empty relations")]
+        [Trait(nameof(CommonWalker.VisitParameter), "Success: EmptyRelations")]
+        public void CommonWalker_VisitParameter_Success_EmptyRelations()
+        {
+            var programText = @"
+            namespace TestCompilation
+            {
+                public class Component
+                {
+                    public int Parameter { get; set; }
+
+                    public Component(Component component)
+                    {
+                        this.Parameter = component.Parameter;
+                    }
+                }
+            }";
+
+            CommonAsserts.AssertEmptyRelationByProgramText(
+                programText, 
                 (model, classDeclaration) => new CommonWalker(model, classDeclaration, "TestCompilation"));
         }
     }

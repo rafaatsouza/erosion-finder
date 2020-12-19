@@ -9,7 +9,7 @@ namespace ErosionFinder.SyntaxWalkers.Tests
     [Collection("MSBuildCollection")]
     public class StructureWalkerTest
     {
-        [Fact]
+        [Fact(DisplayName = "StructureWalker GetStructure - Success - Gets Class structure type")]
         [Trait(nameof(StructureWalker.GetStructure), "Success: GetsClass")]
         public void StructureWalker_GetStructure_Success_GetsClass()
         {
@@ -24,7 +24,7 @@ namespace ErosionFinder.SyntaxWalkers.Tests
                 programText, StructureType.Class, "TestCompilation", "Program");
         }
 
-        [Fact]
+        [Fact(DisplayName = "StructureWalker GetStructure - Success - Gets Interface structure type")]
         [Trait(nameof(StructureWalker.GetStructure), "Success: GetsInterface")]
         public void StructureWalker_GetStructure_Success_GetsInterface()
         {
@@ -39,7 +39,7 @@ namespace ErosionFinder.SyntaxWalkers.Tests
                 programText, StructureType.Interface, "TestCompilation", "IProgram");
         }
 
-        [Fact]
+        [Fact(DisplayName = "StructureWalker GetStructure - Success - Gets Enum structure type")]
         [Trait(nameof(StructureWalker.GetStructure), "Success: GetsEnum")]
         public void StructureWalker_GetStructure_Success_GetsEnum()
         {
