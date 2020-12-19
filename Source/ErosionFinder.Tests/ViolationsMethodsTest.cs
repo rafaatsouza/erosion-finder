@@ -228,8 +228,8 @@ namespace ErosionFinder.Tests
                         Name = name,
                         Type = StructureType.Class,
                         Namespace = fullNamespace,
-                        References = references,
-                        Relations = relations
+                        References = references ?? Enumerable.Empty<string>(),
+                        Relations = relations ?? Enumerable.Empty<Relation>()
                     }
                 }
             };
