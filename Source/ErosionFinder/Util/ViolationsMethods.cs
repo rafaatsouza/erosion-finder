@@ -22,7 +22,7 @@ namespace ErosionFinder.Util
             var structures = codeFiles.SelectMany(c => c.Structures);
             var namespaces = structures.Select(s => s.Namespace).Distinct();
 
-            var layersNamespaces = GetLayerNamespaces(constraints.Layers, namespaces);
+            var layersNamespaces = GetLayersNamespaces(constraints.Layers, namespaces);
 
             var lockObject = new object();
 
@@ -63,7 +63,7 @@ namespace ErosionFinder.Util
             return violations;
         }
 
-        private static IDictionary<string, IEnumerable<string>> GetLayerNamespaces(
+        private static IDictionary<string, IEnumerable<string>> GetLayersNamespaces(
             IDictionary<string, NamespacesGroupingMethod> layers, IEnumerable<string> namespaces)
         {
             var layersNamespaces = new Dictionary<string, IEnumerable<string>>();
