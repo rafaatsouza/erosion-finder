@@ -9,7 +9,7 @@ namespace ErosionFinder.Extensions.Tests
 {
     public class ArchitecturalRuleExtensionsTest
     {
-        [Fact]
+        [Fact(DisplayName = "ArchitecturalRuleExtensions CheckIfItsValid - Error: Null reference")]
         [Trait(nameof(ArchitecturalRuleExtensions.CheckIfItsValid), "Error_NullReference")]
         public void CheckIfItsValid_ArchitecturalRule_Error_NullReference()
         {
@@ -23,7 +23,7 @@ namespace ErosionFinder.Extensions.Tests
             Assert.Null(result);
         }
 
-        [Fact]
+        [Fact(DisplayName = "ArchitecturalRuleExtensions CheckIfItsValid - Error: Invalid rule")]
         [Trait(nameof(ArchitecturalRuleExtensions.CheckIfItsValid), "Error_InvalidRule")]
         public void CheckIfItsValid_ArchitecturalRule_Error_InvalidRule()
         {
@@ -52,7 +52,7 @@ namespace ErosionFinder.Extensions.Tests
             }
         }
 
-        [Fact]
+        [Fact(DisplayName = "ArchitecturalRuleExtensions CheckIfItsValid - Success")]
         [Trait(nameof(ArchitecturalRuleExtensions.CheckIfItsValid), "Success")]
         public void CheckIfItsValid_ArchitecturalRule_Success()
         {
@@ -71,9 +71,9 @@ namespace ErosionFinder.Extensions.Tests
             Assert.Null(result);
         }
 
-        [Theory]
         [InlineData(RuleOperator.NeedToRelate)]
         [InlineData(RuleOperator.OnlyNeedToRelate)]
+        [Theory(DisplayName = "ArchitecturalRuleExtensions GetViolatingStructures - Success: NeedToRelate relation type")]
         [Trait(nameof(ArchitecturalRuleExtensions.GetViolatingStructures), "Success_NeedToRelate")]
         public void GetViolatingStructures_Success_NeedToRelate(RuleOperator ruleOperator)
         {
@@ -117,7 +117,7 @@ namespace ErosionFinder.Extensions.Tests
                 violatingStructures.Single().Namespace);
         }    
 
-        [Fact]
+        [Fact(DisplayName = "ArchitecturalRuleExtensions GetViolatingStructures - Success: OnlyCanRelate relation type")]
         [Trait(nameof(ArchitecturalRuleExtensions.GetViolatingStructures), "Success_OnlyCanRelate")]
         public void GetViolatingStructures_Success_OnlyCanRelate()
         {
@@ -165,8 +165,8 @@ namespace ErosionFinder.Extensions.Tests
                 violatingStructures.Single().Namespace);
         }    
 
-        [Fact]
-        [Trait(nameof(ArchitecturalRuleExtensions.GetViolatingStructures), "Success_OnlyCanRelate")]
+        [Fact(DisplayName = "ArchitecturalRuleExtensions GetViolatingStructures - Success: CanNotRelate relation type")]
+        [Trait(nameof(ArchitecturalRuleExtensions.GetViolatingStructures), "Success_CanNotRelate")]
         public void GetViolatingStructures_Success_CanNotRelate()
         {
             var architectureRule = new ArchitecturalRule()

@@ -11,7 +11,7 @@ namespace ErosionFinder.Tests
 {
     public class ViolationsMethodsTest
     {
-        [Fact]
+        [Fact(DisplayName = "ViolationsMethods GetViolations - Error - Namespace not found for regex defined layer")]
         [Trait(nameof(ViolationsMethods.GetViolations), "Error_NamespaceNotFoundForRegexDefinedLayer")]
         public void GetViolations_Error_NamespaceNotFoundForRegexDefinedLayer()
         {
@@ -49,9 +49,9 @@ namespace ErosionFinder.Tests
             Assert.Equal(nameof(ConstraintsError.NamespaceNotFoundForLayer), result.Key);
         }
     
-        [Theory]
         [InlineData(RuleOperator.NeedToRelate)]
         [InlineData(RuleOperator.OnlyNeedToRelate)]
+        [Theory(DisplayName = "ViolationsMethods GetViolations - Success - NeedToRelate relation types")]
         [Trait(nameof(ViolationsMethods.GetViolations), "Success_NeedToRelate")]
         public void GetViolations_Success_NeedToRelate(RuleOperator ruleOperator)
         {
@@ -96,10 +96,9 @@ namespace ErosionFinder.Tests
             Assert.Single(violations.Single().Structures);
             Assert.Equal(constraints.Rules.Single().RuleOperator, violations.First().Rule.RuleOperator);
             Assert.Equal(originStructureName, violations.First().Structures.Single());
-
         }    
 
-        [Fact]
+        [Fact(DisplayName = "ViolationsMethods GetViolations - Success - OnlyCanRelate relation type")]
         [Trait(nameof(ViolationsMethods.GetViolations), "Success_OnlyCanRelate")]
         public void GetViolations_Success_OnlyCanRelate()
         {
@@ -158,7 +157,7 @@ namespace ErosionFinder.Tests
             Assert.Equal(thirdStructureName, violations.First().Structures.Single());
         }    
 
-        [Fact]
+        [Fact(DisplayName = "ViolationsMethods GetViolations - Success - CanNotRelate relation type")]
         [Trait(nameof(ViolationsMethods.GetViolations), "Success_CanNotRelate")]
         public void GetViolations_Success_CanNotRelate()
         {
