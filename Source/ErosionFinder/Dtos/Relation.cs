@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace ErosionFinder.Dtos
 {
@@ -21,19 +22,27 @@ namespace ErosionFinder.Dtos
         /// <summary>
         /// List of components that "represents" this relation
         /// </summary>
-        public ICollection<string> Components { get; set; }
+        public IList<string> Components { get; set; }
+            = new List<string>();
 
         /// <summary>
         /// Namespace
         /// </summary>
         public string Target { get; set; }
 
-        public Relation(RelationType relationType, string target, bool isFromSource)
+        public Relation(RelationType relationType, 
+            string target, bool isFromSource)
         {
             RelationType = relationType;
             Target = target;
             TargetFromSource = isFromSource;
-            Components = new List<string>();
+        }
+
+        public Relation(RelationType relationType, string target, 
+            bool isFromSource, params string[] components)
+            : this(relationType, target, isFromSource)
+        {
+            Components = new List<string>(components);
         }
     }
 }
