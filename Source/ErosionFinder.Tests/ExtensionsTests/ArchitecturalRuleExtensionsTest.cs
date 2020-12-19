@@ -1,13 +1,76 @@
+using ErosionFinder.Data.Models;
+using ErosionFinder.Data.Exceptions;
+using ErosionFinder.Dtos;
 using System.Collections.Generic;
 using System.Linq;
-using ErosionFinder.Data.Models;
-using ErosionFinder.Dtos;
 using Xunit;
 
 namespace ErosionFinder.Extensions.Tests
 {
     public class ArchitecturalRuleExtensionsTest
     {
+        [Fact]
+        [Trait(nameof(ArchitecturalRuleExtensions.CheckIfItsValid), "Error_NullReference")]
+        public void CheckIfItsValid_ArchitecturalRule_Error_NullReference()
+        {
+            ArchitecturalRule rule = null;
+            
+            var result = Record.Exception(() => 
+            {
+                rule.CheckIfItsValid();
+            });
+
+            Assert.Null(result);
+        }
+
+        [Fact]
+        [Trait(nameof(ArchitecturalRuleExtensions.CheckIfItsValid), "Error_InvalidRule")]
+        public void CheckIfItsValid_ArchitecturalRule_Error_InvalidRule()
+        {
+            var rules = new ArchitecturalRule[3]
+            {
+                new ArchitecturalRule(),
+                new ArchitecturalRule()
+                {
+                    OriginLayer = "Origin"
+                },
+                new ArchitecturalRule()
+                {
+                    OriginLayer = "Origin",
+                    TargetLayer = "Target"
+                }
+            };
+
+            foreach (var rule in rules)
+            {
+                var result = Assert.Throws<ConstraintsException>(() => 
+                {
+                    rule.CheckIfItsValid();
+                });
+
+                Assert.Equal(ConstraintsError.InvalidRule.Key, result.Key);   
+            }
+        }
+
+        [Fact]
+        [Trait(nameof(ArchitecturalRuleExtensions.CheckIfItsValid), "Success")]
+        public void CheckIfItsValid_ArchitecturalRule_Success()
+        {
+            var rule = new ArchitecturalRule()
+            {
+                OriginLayer = "Origin",
+                TargetLayer = "Target",
+                RuleOperator = RuleOperator.OnlyNeedToRelate
+            };
+            
+            var result = Record.Exception(() => 
+            {
+                rule.CheckIfItsValid();
+            });
+
+            Assert.Null(result);
+        }
+
         [Theory]
         [InlineData(RuleOperator.NeedToRelate)]
         [InlineData(RuleOperator.OnlyNeedToRelate)]
@@ -103,6 +166,7 @@ namespace ErosionFinder.Extensions.Tests
         }    
 
         [Fact]
+        [Trait(nameof(ArchitecturalRuleExtensions.GetViolatingStructures), "Success_OnlyCanRelate")]
         public void GetViolatingStructures_Success_CanNotRelate()
         {
             var architectureRule = new ArchitecturalRule()
