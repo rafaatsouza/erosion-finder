@@ -16,11 +16,13 @@ namespace ErosionFinder.Util
         public static IEnumerable<Violation> GetViolations(ArchitecturalConstraints constraints, 
             IEnumerable<CodeFile> codeFiles, CancellationToken cancellationToken)
         {
+            constraints.CheckIfItsValid();
+
             var violations = new List<Violation>();
             var structures = codeFiles.SelectMany(c => c.Structures);
             var namespaces = structures.Select(s => s.Namespace).Distinct();
 
-            var layersNamespaces = GetNamespacesForEachLayer(constraints, namespaces).ToList();
+            var layersNamespaces = GetLayerNamespaces(constraints.Layers, namespaces);
 
             var lockObject = new object();
 
@@ -32,14 +34,8 @@ namespace ErosionFinder.Util
 
             Parallel.ForEach(constraints.Rules, parallelOptions, rule =>
             {
-                //TODO: Define dictionaries
-                var originNamespaces = layersNamespaces
-                    .Single(l => l.Layer.Equals(rule.OriginLayer))
-                    .Namespaces;
-
-                var targetNamespaces = layersNamespaces
-                    .Single(l => l.Layer.Equals(rule.TargetLayer))
-                    .Namespaces;
+                var originNamespaces = layersNamespaces[rule.OriginLayer];
+                var targetNamespaces = layersNamespaces[rule.TargetLayer];
 
                 var originStructures = structures
                     .Where(s => originNamespaces.Any(n => n.Equals(s.Namespace)));
@@ -67,38 +63,45 @@ namespace ErosionFinder.Util
             return violations;
         }
 
-        private static IEnumerable<LayerNamespaces> GetNamespacesForEachLayer(
-            ArchitecturalConstraints constraints, IEnumerable<string> namespaces)
+        private static IDictionary<string, IEnumerable<string>> GetLayerNamespaces(
+            IDictionary<string, NamespacesGroupingMethod> layers, IEnumerable<string> namespaces)
         {
-            foreach (var layer in constraints.Layers)
+            var layersNamespaces = new Dictionary<string, IEnumerable<string>>();
+
+            foreach (var layer in layers)
             {
-                var namespaceGrouppingMethod = layer.Value;
-
-                IEnumerable<string> layerNamespaces = null;
-
-                if (namespaceGrouppingMethod is NamespacesExplicitlyGrouped explicitlyGrouped)
+                if (!layersNamespaces.ContainsKey(layer.Key))
                 {
-                    layerNamespaces = explicitlyGrouped.Namespaces;
+                    var layerNamespaces = GetNamespacesByGroupingMethod(
+                        layer.Value, namespaces);
 
+                    if (layerNamespaces == null || !layerNamespaces.Any())
+                    {
+                        throw new ConstraintsException(
+                            ConstraintsError.NamespaceNotFoundForLayer(layer.Key));
+                    }
+
+                    layersNamespaces.Add(layer.Key, layerNamespaces);
                 }
-                else if (namespaceGrouppingMethod is NamespacesRegularExpressionGrouped regexGrouped)
-                {
-                    layerNamespaces = namespaces
-                        .Where(n => regexGrouped.NamespaceRegexPattern.IsMatch(n));
-                }
-
-                if (layerNamespaces == null || !layerNamespaces.Any())
-                {
-                    throw new ConstraintsException(
-                        ConstraintsError.NamespaceNotFoundForLayer(layer.Key));
-                }
-
-                yield return new LayerNamespaces()
-                {
-                    Layer = layer.Key,
-                    Namespaces = layerNamespaces
-                };
             }
+            
+            return layersNamespaces;
+        }
+
+        private static IEnumerable<string> GetNamespacesByGroupingMethod(
+            NamespacesGroupingMethod groupingMethod, IEnumerable<string> namespaces)
+        {
+            if (groupingMethod is NamespacesExplicitlyGrouped explicitlyGrouped)
+            {
+                return explicitlyGrouped.Namespaces;
+            }
+            else if (groupingMethod is NamespacesRegularExpressionGrouped regexGrouped)
+            {
+                return namespaces
+                    .Where(n => regexGrouped.NamespaceRegexPattern.IsMatch(n));
+            }
+
+            return Enumerable.Empty<string>();
         }
     }
 }
