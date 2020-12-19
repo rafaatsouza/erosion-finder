@@ -1,4 +1,5 @@
-﻿using ErosionFinder.Data.Exceptions;
+﻿using ErosionFinder.Extensions;
+using ErosionFinder.Data.Exceptions;
 using ErosionFinder.Data.Models;
 using ErosionFinder.Dtos;
 using System.Collections.Generic;
@@ -31,6 +32,7 @@ namespace ErosionFinder.Util
 
             Parallel.ForEach(constraints.Rules, parallelOptions, rule =>
             {
+                //TODO: Define dictionaries
                 var originNamespaces = layersNamespaces
                     .Single(l => l.Layer.Equals(rule.OriginLayer))
                     .Namespaces;
@@ -45,33 +47,10 @@ namespace ErosionFinder.Util
                 var anotherStructures = structures
                     .Where(s => !originNamespaces.Any(n => n.Equals(s.Namespace)));
 
-                IEnumerable<Structure> violatingStructures = null;
+                var violatingStructures = rule.GetViolatingStructures(
+                    targetNamespaces, originStructures, anotherStructures);
 
-                if (rule.RuleOperator == RuleOperator.NeedToRelate
-                    || rule.RuleOperator == RuleOperator.OnlyNeedToRelate)
-                {
-                    violatingStructures = originStructures
-                        .Where(s => !(s.Relations?.Any(r => targetNamespaces.Any(n => n.Equals(r.Target))) ?? false));
-
-                    if (rule.RuleOperator == RuleOperator.OnlyNeedToRelate)
-                    {
-                        violatingStructures = violatingStructures
-                            .Concat(anotherStructures.
-                                Where(s => (s.Relations?.Any(r => targetNamespaces.Any(n => n.Equals(r.Target)))) ?? false));
-                    }
-                }
-                else if (rule.RuleOperator == RuleOperator.OnlyCanRelate)
-                {
-                    violatingStructures = anotherStructures.
-                        Where(s => (s.Relations?.Any(r => targetNamespaces.Any(n => n.Equals(r.Target))) ?? false));
-                }
-                else if (rule.RuleOperator == RuleOperator.CanNotRelate)
-                {
-                    violatingStructures = originStructures
-                        .Where(s => (s.Relations?.Any(r => targetNamespaces.Any(n => n.Equals(r.Target))) ?? false));
-                }
-
-                if (violatingStructures?.Any() ?? false)
+                if (violatingStructures.Any())
                 {
                     lock (lockObject)
                     {
