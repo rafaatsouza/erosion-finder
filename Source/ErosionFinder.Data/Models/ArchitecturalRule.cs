@@ -28,10 +28,9 @@ namespace ErosionFinder.Data.Models
         /// this rule should be applied to (optional)
         /// </summary>
         public IEnumerable<RelationType> RelationTypes { get; set; }
+            = Enumerable.Empty<RelationType>();
 
         public bool HasParticularRelationTypes 
-        { 
-            get => RelationTypes != null && RelationTypes.Any();
-        }
+            { get => RelationTypes.Any(); }
     }
 }
