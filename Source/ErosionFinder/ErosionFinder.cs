@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
+using ErosionFinder.Helpers;
 
 namespace ErosionFinder
 {
@@ -56,8 +57,8 @@ namespace ErosionFinder
 
             var codeFiles = await Task.WhenAll(getCodeFiles);
 
-            return ViolationsMethods.GetViolations(
-                constraints, codeFiles, cancellationToken);
+            return GetViolationsByConstraintsAndCodeFiles(
+                constraints, codeFiles);
         }    
 
         private static async Task<CodeFile> GetCodeFileByDocumentAsync(
@@ -77,6 +78,32 @@ namespace ErosionFinder
                 FilePath = document.FilePath,
                 Structures = documentWalker.Structures
             };
+        }
+
+        private static IEnumerable<Violation> GetViolationsByConstraintsAndCodeFiles(
+            ArchitecturalConstraints constraints, IEnumerable<CodeFile> codeFiles)
+        {
+            var structures = codeFiles.SelectMany(c => c.Structures);
+            var namespaces = structures.Select(s => s.Namespace).Distinct();
+
+            var layersNamespaces = NamespacesGroupingMethodHelper.GetLayersNamespaces(
+                constraints.Layers, namespaces);
+
+            foreach(var rule in constraints.Rules)
+            {
+                var violatingStructures = ArchitecturalRuleHelper.GetViolatingStructures(
+                    rule, layersNamespaces, structures);
+
+                if (violatingStructures.Any())
+                {
+                    yield return new Violation()
+                    {
+                        Rule = rule,
+                        Structures = violatingStructures
+                            .Select(s => s.Name).OrderBy(n => n)
+                    };
+                }
+            }
         }
     }
 }
