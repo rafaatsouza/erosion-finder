@@ -29,8 +29,5 @@ namespace ErosionFinder.Data.Models
         /// </summary>
         public IEnumerable<RelationType> RelationTypes { get; set; }
             = Enumerable.Empty<RelationType>();
-
-        public bool HasParticularRelationTypes 
-            { get => RelationTypes.Any(); }
     }
 }

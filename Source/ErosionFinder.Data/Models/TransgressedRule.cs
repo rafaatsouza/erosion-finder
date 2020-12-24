@@ -3,18 +3,19 @@
 namespace ErosionFinder.Data.Models
 {
     /// <summary>
-    /// Class that represents some violation; i.e. some defined rule which was not followed
+    /// Class that represents some violation; 
+    /// i.e. some defined rule which was not followed
     /// </summary>
-    public class Violation
+    public class TransgressedRule
     {
         /// <summary>
-        /// The defined rule which was not followed
+        /// Rule which was not followed
         /// </summary>
         public ArchitecturalRule Rule { get; set; }
 
         /// <summary>
         /// List of structures names that represent the violated rule
         /// </summary>
-        public IEnumerable<string> Structures { get; set; }
+        public IEnumerable<ArchitecturalViolationOccurrence> Violations { get; set; }
     }
 }
