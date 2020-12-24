@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace ErosionFinder.Data.Converter
 {
-    public class ArchitecturalViolationsContractResolver : DefaultContractResolver
+    public class ConformanceCheckContractResolver : DefaultContractResolver
     {
         protected override IList<JsonProperty> CreateProperties(
             Type type, MemberSerialization memberSerialization)
