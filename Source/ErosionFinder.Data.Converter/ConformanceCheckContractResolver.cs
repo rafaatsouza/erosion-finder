@@ -43,6 +43,12 @@ namespace ErosionFinder.Data.Converter
                     instance => ShouldSerializeTransgressedRules(instance);
             }
 
+            if (IsPropertyType<IEnumerable<RelationType>>(property))
+            {
+                property.ShouldSerialize =
+                    instance => ShouldSerializeRelationTypes(instance);
+            }
+
             return property;
         }
 
@@ -66,6 +72,14 @@ namespace ErosionFinder.Data.Converter
         {
             if (instance is ArchitecturalConformanceCheck occurrence)
                 return occurrence.TransgressedRules.Any();
+
+            return true;
+        }
+
+        private bool ShouldSerializeRelationTypes(object instance)
+        {
+            if (instance is ArchitecturalRule rule)
+                return rule.RelationTypes.Any();
 
             return true;
         }
