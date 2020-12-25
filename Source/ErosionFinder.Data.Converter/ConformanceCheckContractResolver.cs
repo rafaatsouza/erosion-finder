@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace ErosionFinder.Data.Converter
 {
@@ -24,19 +25,53 @@ namespace ErosionFinder.Data.Converter
             var property = base.CreateProperty(
                 member, memberSerialization);
             
-            if (property.PropertyType.Equals(typeof(IEnumerable<NonConformingRelation>)))
+            if (IsPropertyType<IEnumerable<NonConformingRelation>>(property))
+            {
+                property.ShouldSerialize = 
+                    instance => ShouldSerializeNonConformingRelations(instance);
+            }
+
+            if (IsPropertyType<IEnumerable<ArchitecturalRule>>(property))
             {
                 property.ShouldSerialize =
-                    instance =>
-                    {
-                        if (instance is ArchitecturalViolationOccurrence occurrence)
-                            return occurrence.NonConformingRelations.Any();
+                    instance => ShouldSerializeFollowedRules(instance);
+            }
 
-                        return true;
-                    };
+            if (IsPropertyType<IEnumerable<ArchitecturalViolationOccurrence>>(property))
+            {
+                property.ShouldSerialize =
+                    instance => ShouldSerializeTransgressedRules(instance);
             }
 
             return property;
         }
+
+        private bool ShouldSerializeNonConformingRelations(object instance)
+        {
+            if (instance is ArchitecturalViolationOccurrence occurrence)
+                return occurrence.NonConformingRelations.Any();
+
+            return true;
+        }
+
+        private bool ShouldSerializeFollowedRules(object instance)
+        {
+            if (instance is ArchitecturalConformanceCheck occurrence)
+                return occurrence.FollowedRules.Any();
+
+            return true;
+        }
+
+        private bool ShouldSerializeTransgressedRules(object instance)
+        {
+            if (instance is ArchitecturalConformanceCheck occurrence)
+                return occurrence.TransgressedRules.Any();
+
+            return true;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool IsPropertyType<T>(JsonProperty prop) where T : class
+            => prop.PropertyType.Equals(typeof(T));
     }
 }

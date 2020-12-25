@@ -14,6 +14,22 @@ namespace ErosionFinder.Data.Models
         public string SolutionFilePath { get; set; }
 
         /// <summary>
+        /// Total number of files
+        /// </summary>
+        public int FilesCount { get; set; }
+
+        /// <summary>
+        /// Total number of structures by each structure type
+        /// </summary>
+        public IDictionary<StructureType, int> StructuresCount { get; set; }
+
+        /// <summary>
+        /// Defined architectural rules which were followed
+        /// </summary>
+        public IEnumerable<ArchitecturalRule> FollowedRules { get; set; }
+             = Enumerable.Empty<ArchitecturalRule>();
+
+        /// <summary>
         /// Defined architectural rules which were transgressed
         /// </summary>
         public IEnumerable<TransgressedRule> TransgressedRules  { get; set; }

@@ -62,10 +62,21 @@ namespace ErosionFinder
 
             return new ArchitecturalConformanceCheck()
             {
+                FilesCount = codeFiles.Count(),
                 SolutionFilePath = solutionFilePath,
-                TransgressedRules = transgressedRules
+                TransgressedRules = transgressedRules,
+                StructuresCount = GetStructureCount(codeFiles),
+                FollowedRules = constraints.Rules
+                    .Where(r => !transgressedRules.Any(tr => tr.Rule.Equals(r)))
             };
         }
+
+        private static IDictionary<StructureType, int> GetStructureCount(
+            ICollection<CodeFile> codeFiles)
+            => (IDictionary<StructureType, int>)codeFiles
+                .SelectMany(c => c.Structures)
+                .GroupBy(s => s.Type)
+                .ToDictionary(g => g.Key, g => g.Count());
 
         private static async Task<CodeFile> GetCodeFileByDocumentAsync(
             Document document, CancellationToken cancellationToken)
@@ -87,7 +98,7 @@ namespace ErosionFinder
         }
 
         private static IEnumerable<TransgressedRule> GetTransgressedRulesByConstraintsAndCodeFiles(
-            ArchitecturalConstraints constraints, IEnumerable<CodeFile> codeFiles)
+            ArchitecturalConstraints constraints, ICollection<CodeFile> codeFiles)
         {
             var structures = codeFiles.SelectMany(c => c.Structures);
             var namespaces = structures.Select(s => s.Namespace).Distinct();
