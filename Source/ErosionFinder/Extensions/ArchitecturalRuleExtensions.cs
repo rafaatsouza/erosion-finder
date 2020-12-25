@@ -25,7 +25,7 @@ namespace ErosionFinder.Extensions
             }
         }
 
-        public static bool Equals(this ArchitecturalRule mainRule, 
+        public static bool IsSameRule(this ArchitecturalRule mainRule, 
             ArchitecturalRule targetRule)
         {
             if (mainRule == null && targetRule == null)

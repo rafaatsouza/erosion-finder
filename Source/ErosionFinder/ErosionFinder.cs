@@ -67,7 +67,7 @@ namespace ErosionFinder
                 TransgressedRules = transgressedRules,
                 StructuresCount = GetStructureCount(codeFiles),
                 FollowedRules = constraints.Rules
-                    .Where(r => !transgressedRules.Any(tr => tr.Rule.Equals(r)))
+                    .Where(r => !transgressedRules.Any(tr => tr.Rule.IsSameRule(r)))
             };
         }
 
