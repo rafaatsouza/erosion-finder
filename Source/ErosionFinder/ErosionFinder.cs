@@ -57,6 +57,9 @@ namespace ErosionFinder
 
             var codeFiles = await Task.WhenAll(getCodeFilesTask);
 
+            if (cancellationToken.IsCancellationRequested)
+                return null;
+
             var transgressedRules = GetTransgressedRulesByConstraintsAndCodeFiles(
                 constraints, codeFiles);
 
