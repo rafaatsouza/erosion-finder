@@ -37,7 +37,7 @@ namespace ErosionFinder.Data.Converter
                     instance => ShouldSerializeFollowedRules(instance);
             }
 
-            if (IsPropertyType<IEnumerable<ArchitecturalViolationOccurrence>>(property))
+            if (IsPropertyType<IEnumerable<TransgressedRule>>(property))
             {
                 property.ShouldSerialize =
                     instance => ShouldSerializeTransgressedRules(instance);
