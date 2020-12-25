@@ -1,4 +1,5 @@
 ﻿using ErosionFinder.Data.Exceptions;
+using ErosionFinder.Data.Models;
 using ErosionFinder.Dtos;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
