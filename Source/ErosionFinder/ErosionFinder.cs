@@ -111,8 +111,8 @@ namespace ErosionFinder
 
             foreach(var rule in constraints.Rules)
             {
-                var violatingOccurrences = ArchitecturalRuleHelper.GetViolatingOccurrences(
-                    rule, layersNamespaces, structures);
+                var violatingOccurrences = ArchitecturalRuleHelper
+                    .GetViolatingOccurrences(rule, layersNamespaces, structures);
 
                 if (violatingOccurrences.Any())
                 {
