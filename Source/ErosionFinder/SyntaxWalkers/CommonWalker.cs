@@ -78,18 +78,18 @@ namespace ErosionFinder.SyntaxWalkers
                 if (memberBindingExpression.Name is IdentifierNameSyntax memberBindingIdentifierName)
                 {
                     IncrementsRelationsFromExpressionAndCheckGenerics(
-                        memberBindingIdentifierName, RelationType.Invocate);
+                        memberBindingIdentifierName, RelationType.Invoke);
                 }
                 else
                 {
                     IncrementsRelationsFromExpressionAndCheckGenerics(
-                        memberBindingExpression, RelationType.Invocate);
+                        memberBindingExpression, RelationType.Invoke);
                 }
             }
             else
             {
                 IncrementsRelationsFromExpressionAndCheckGenerics(
-                    expression, RelationType.Invocate);
+                    expression, RelationType.Invoke);
             }
 
             base.VisitInvocationExpression(node);

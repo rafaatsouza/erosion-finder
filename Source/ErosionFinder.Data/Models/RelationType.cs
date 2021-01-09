@@ -40,7 +40,7 @@
         /// <summary>
         /// Some type's function is invoked
         /// </summary>
-        Invocate = 8,
+        Invoke = 8,
 
         /// <summary>
         /// Some type is indirectly referenced; 
