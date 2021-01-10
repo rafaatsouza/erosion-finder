@@ -54,15 +54,20 @@ namespace Sample
           {
             OriginLayer = "Services",
             RuleOperator = RuleOperator.OnlyCanRelate,
-            TargetLayer = "Models"
+            TargetLayer = "Models",
+            RelationTypes = new List<RelationType>()
+            { 
+              RelationType.ReturnByFunction, 
+              RelationType.ReceiptByMethodArgument
+              //...   
+            }
           }
         }
       };
 
       var solutionFilePath = @"C:\Users\MyUser\Documents\TargetSolution\TargetSolution.sln";
 
-      var violations = await ErosionFinderMethods
-        .GetViolationsBySolutionFilePathAndConstraintsAsync(
+      var result = await ErosionFinderMethods.CheckArchitecturalConformanceAsync(
           solutionFilePath, constraints, default);
     }
   }
