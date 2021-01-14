@@ -14,6 +14,11 @@ namespace ErosionFinder.Data.Models
         public string SolutionFilePath { get; set; }
 
         /// <summary>
+        /// Solution name
+        /// </summary>
+        public string SolutionName { get; set; }
+
+        /// <summary>
         /// Total number of files
         /// </summary>
         public int FilesCount { get; set; }

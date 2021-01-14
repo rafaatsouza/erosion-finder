@@ -42,15 +42,16 @@ namespace ErosionFinder
             constraints.CheckIfItsValid();
 
             return ExecuteCheckArchitecturalConformanceAsync(
-                solutionFilePath, constraints, cancellationToken);
+                solutionFile.FullName, solutionFile.Name, 
+                constraints, cancellationToken);
         }
 
         private static async Task<ArchitecturalConformanceCheck> ExecuteCheckArchitecturalConformanceAsync(
-            string solutionFilePath, ArchitecturalConstraints constraints, 
+            string solutionPath, string solutionName, ArchitecturalConstraints constraints, 
             CancellationToken cancellationToken)
         {
             var documents = await MSBuildWorkspaceMethods
-                .GetDocumentsAsync(solutionFilePath, cancellationToken);
+                .GetDocumentsAsync(solutionPath, cancellationToken);
 
             var getCodeFilesTask = documents
                 .Select(d => GetCodeFileByDocumentAsync(d, cancellationToken));
@@ -66,7 +67,8 @@ namespace ErosionFinder
             return new ArchitecturalConformanceCheck()
             {
                 FilesCount = codeFiles.Count(),
-                SolutionFilePath = solutionFilePath,
+                SolutionFilePath = solutionPath,
+                SolutionName = solutionName.Replace(".sln", ""),
                 TransgressedRules = transgressedRules,
                 StructuresCount = GetStructureCount(codeFiles),
                 FollowedRules = constraints.Rules
