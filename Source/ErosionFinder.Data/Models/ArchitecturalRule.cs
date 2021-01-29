@@ -30,8 +30,10 @@ namespace ErosionFinder.Data.Models
         public IEnumerable<RelationType> RelationTypes { get; set; }
             = Enumerable.Empty<RelationType>();
 
-        public ArchitecturalRule(string origin, string target, 
-            RuleOperator ruleOperator, params RelationType[] types)
+        public ArchitecturalRule() { }
+
+        public ArchitecturalRule(string origin, string target,
+            RuleOperator ruleOperator, params RelationType[] types) : base()
         {
             OriginLayer = origin;
             TargetLayer = target;
