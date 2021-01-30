@@ -23,5 +23,5 @@ jobs:
       - name: Build
         run: dotnet build Source/ --configuration $config --no-restore
         
-      - name: Test PR      
+      - name: Test      
         run: dotnet test Source/ --no-restore --no-build --configuration $config
