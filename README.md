@@ -1,5 +1,6 @@
 <a href="icon.png"><img width="42px" height="42px" src="icon.png" /></a> ErosionFinder
 ==================================
+![code-size](https://img.shields.io/github/languages/code-size/rafaatsouza/erosion-finder)
 ![unit-test](https://github.com/rafaatsouza/erosion-finder/workflows/unit-test/badge.svg)
 [![NuGet version (ErosionFinder)](https://img.shields.io/nuget/v/ErosionFinder.svg)](https://www.nuget.org/packages/ErosionFinder/)
 
@@ -41,28 +42,19 @@ namespace Sample
       {
         Layers = new Dictionary<string, NamespacesGroupingMethod>()
         {
-          {
-            "Services", new NamespacesRegularExpressionGrouped(serviceLayerRegex)
-          },
-          {
-            "Models", new NamespacesRegularExpressionGrouped(modelLayerRegex)
-          }
+          { "Services", new NamespacesRegularExpressionGrouped(serviceLayerRegex) },
+          { "Models", new NamespacesRegularExpressionGrouped(modelLayerRegex) }
         },
         Rules = new List<ArchitecturalRule>()
         {
-          new ArchitecturalRule()
-          {
-            OriginLayer = "Services",
-            RuleOperator = RuleOperator.OnlyCanRelate,
-            TargetLayer = "Models"
-          }
+          new ArchitecturalRule("Services", "Models", RuleOperator.OnlyCanRelate, 
+            RelationType.ReturnByFunction, RelationType.ReceiptByMethodArgument)
         }
       };
 
       var solutionFilePath = @"C:\Users\MyUser\Documents\TargetSolution\TargetSolution.sln";
 
-      var violations = await ErosionFinderMethods
-        .GetViolationsBySolutionFilePathAndConstraintsAsync(
+      var result = await ErosionFinderMethods.CheckArchitecturalConformanceAsync(
           solutionFilePath, constraints, default);
     }
   }

@@ -1,6 +1,6 @@
-﻿namespace ErosionFinder.Dtos
+﻿namespace ErosionFinder.Data.Models
 {
-    internal enum StructureType
+    public enum StructureType
     {
         /// <summary>
         /// C# class

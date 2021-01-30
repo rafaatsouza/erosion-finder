@@ -1,4 +1,4 @@
-using ErosionFinder.Dtos;
+using ErosionFinder.Data.Models;
 using ErosionFinder.Tests.Util;
 using Xunit;
 

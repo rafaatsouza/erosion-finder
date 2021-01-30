@@ -1,4 +1,4 @@
-using ErosionFinder.Dtos;
+using ErosionFinder.Data.Models;
 using ErosionFinder.Tests.Util;
 using Xunit;
 
@@ -127,9 +127,9 @@ namespace ErosionFinder.SyntaxWalkers.Tests
                 (model, classDeclaration) => new CommonWalker(model, classDeclaration, "TestCompilation"));
         }
 
-        [Fact(DisplayName = "CommonWalker VisitParameter - Success - Gets Invocate relation type")]
-        [Trait(nameof(CommonWalker.VisitParameter), "Success: GetsInvocate")]
-        public void CommonWalker_VisitParameter_Success_GetsInvocate()
+        [Fact(DisplayName = "CommonWalker VisitParameter - Success - Gets Invoke relation type")]
+        [Trait(nameof(CommonWalker.VisitParameter), "Success: GetsInvoke")]
+        public void CommonWalker_VisitParameter_Success_GetsInvoke()
         {
             var programText = @"
             namespace TestCompilation
@@ -152,7 +152,7 @@ namespace ErosionFinder.SyntaxWalkers.Tests
             }";
 
             CommonAsserts.AssertSingleRelationAndSingleComponentByProgramText(
-                programText, RelationType.Invocate, "TestCompilation", "CodeComponent",
+                programText, RelationType.Invoke, "TestCompilation", "CodeComponent",
                 (model, classDeclaration) => new CommonWalker(model, classDeclaration, "TestCompilation"));
         }
     

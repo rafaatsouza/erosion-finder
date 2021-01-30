@@ -1,4 +1,5 @@
-﻿using ErosionFinder.Dtos;
+﻿using ErosionFinder.Data.Models;
+using ErosionFinder.Dtos;
 using ErosionFinder.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -77,18 +78,18 @@ namespace ErosionFinder.SyntaxWalkers
                 if (memberBindingExpression.Name is IdentifierNameSyntax memberBindingIdentifierName)
                 {
                     IncrementsRelationsFromExpressionAndCheckGenerics(
-                        memberBindingIdentifierName, RelationType.Invocate);
+                        memberBindingIdentifierName, RelationType.Invoke);
                 }
                 else
                 {
                     IncrementsRelationsFromExpressionAndCheckGenerics(
-                        memberBindingExpression, RelationType.Invocate);
+                        memberBindingExpression, RelationType.Invoke);
                 }
             }
             else
             {
                 IncrementsRelationsFromExpressionAndCheckGenerics(
-                    expression, RelationType.Invocate);
+                    expression, RelationType.Invoke);
             }
 
             base.VisitInvocationExpression(node);

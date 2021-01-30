@@ -23,7 +23,7 @@ namespace ErosionFinder
         /// <param name="solutionFilePath">Solution file path</param>
         /// <param name="constraints">Set of architectural constraints</param>
         /// <returns>List of architectural violations</returns>
-        public static Task<IEnumerable<Violation>> GetViolationsBySolutionFilePathAndConstraintsAsync(
+        public static Task<ArchitecturalConformanceCheck> CheckArchitecturalConformanceAsync(
             string solutionFilePath, ArchitecturalConstraints constraints, 
             CancellationToken cancellationToken)
         {
@@ -41,25 +41,37 @@ namespace ErosionFinder
 
             constraints.CheckIfItsValid();
 
-            return ExecuteGetViolationsBySolutionFilePathAndConstraintsAsync(
-                solutionFilePath, constraints, cancellationToken);
+            return ExecuteCheckArchitecturalConformanceAsync(
+                solutionFile.FullName, solutionFile.Name, 
+                constraints, cancellationToken);
         }
 
-        private static async Task<IEnumerable<Violation>> ExecuteGetViolationsBySolutionFilePathAndConstraintsAsync(
-            string solutionFilePath, ArchitecturalConstraints constraints, 
+        private static async Task<ArchitecturalConformanceCheck> ExecuteCheckArchitecturalConformanceAsync(
+            string solutionPath, string solutionName, ArchitecturalConstraints constraints, 
             CancellationToken cancellationToken)
         {
             var documents = await MSBuildWorkspaceMethods
-                .GetDocumentsAsync(solutionFilePath, cancellationToken);
+                .GetDocumentsAsync(solutionPath, cancellationToken);
 
-            var getCodeFiles = documents
+            var getCodeFilesTask = documents
                 .Select(d => GetCodeFileByDocumentAsync(d, cancellationToken));
 
-            var codeFiles = await Task.WhenAll(getCodeFiles);
+            var codeFiles = await Task.WhenAll(getCodeFilesTask);
 
-            return GetViolationsByConstraintsAndCodeFiles(
+            if (cancellationToken.IsCancellationRequested)
+                return null;
+
+            var transgressedRules = GetTransgressedRulesByConstraintsAndCodeFiles(
                 constraints, codeFiles);
-        }    
+
+            return new ArchitecturalConformanceCheck()
+            {
+                SolutionName = solutionName.Replace(".sln", ""),
+                TransgressedRules = transgressedRules,
+                FollowedRules = constraints.Rules
+                    .Where(r => !transgressedRules.Any(tr => tr.Rule.IsSameRule(r)))
+            };
+        }
 
         private static async Task<CodeFile> GetCodeFileByDocumentAsync(
             Document document, CancellationToken cancellationToken)
@@ -80,27 +92,26 @@ namespace ErosionFinder
             };
         }
 
-        private static IEnumerable<Violation> GetViolationsByConstraintsAndCodeFiles(
-            ArchitecturalConstraints constraints, IEnumerable<CodeFile> codeFiles)
+        private static IEnumerable<TransgressedRule> GetTransgressedRulesByConstraintsAndCodeFiles(
+            ArchitecturalConstraints constraints, ICollection<CodeFile> codeFiles)
         {
             var structures = codeFiles.SelectMany(c => c.Structures);
             var namespaces = structures.Select(s => s.Namespace).Distinct();
 
-            var layersNamespaces = NamespacesGroupingMethodHelper.GetLayersNamespaces(
-                constraints.Layers, namespaces);
+            var layersNamespaces = NamespacesGroupingMethodHelper
+                .GetLayersNamespaces(constraints.Layers, namespaces);
 
             foreach(var rule in constraints.Rules)
             {
-                var violatingStructures = ArchitecturalRuleHelper.GetViolatingStructures(
-                    rule, layersNamespaces, structures);
+                var violatingOccurrences = ArchitecturalRuleHelper
+                    .GetViolatingOccurrences(rule, layersNamespaces, structures);
 
-                if (violatingStructures.Any())
+                if (violatingOccurrences.Any())
                 {
-                    yield return new Violation()
+                    yield return new TransgressedRule()
                     {
                         Rule = rule,
-                        Structures = violatingStructures
-                            .Select(s => s.Name).OrderBy(n => n)
+                        Violations = violatingOccurrences
                     };
                 }
             }
