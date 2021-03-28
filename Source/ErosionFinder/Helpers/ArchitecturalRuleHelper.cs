@@ -86,9 +86,9 @@ namespace ErosionFinder.Helpers
                 .Select(s => 
                 {
                     var notAllowedRelations = s.Relations
-                        .Where(r => RelationTypeIsInDefinedList(r, relationTypes) 
-                            && targetNamespaces.Any(n => n.Equals(r.Target))
-                            && !s.Namespace.Equals(r.Target));
+                        .Where(r => !s.Namespace.Equals(r.Target)
+                            && RelationTypeIsInDefinedList(r, relationTypes) 
+                            && targetNamespaces.Any(n => n.Equals(r.Target)));
 
                     return GetOccurrenceByStructureAndRelations(s, notAllowedRelations);
                 })
@@ -106,9 +106,9 @@ namespace ErosionFinder.Helpers
                 .Select(s => 
                 {
                     var notAllowedRelations = s.Relations
-                        .Where(r => RelationTypeIsInDefinedList(r, relationTypes) 
-                            && targetNamespaces.Any(n => n.Equals(r.Target))
-                            && !s.Namespace.Equals(r.Target));
+                        .Where(r => !s.Namespace.Equals(r.Target)
+                            && RelationTypeIsInDefinedList(r, relationTypes) 
+                            && targetNamespaces.Any(n => n.Equals(r.Target)));
 
                     return GetOccurrenceByStructureAndRelations(s, notAllowedRelations);
                 })
