@@ -121,6 +121,46 @@ namespace ErosionFinder.Helpers.Tests
                 $"{targetNamespace}.{targetStructureName}");
         }   
 
+        [Fact(DisplayName = "ArchitecturalRuleHelper GetViolatingOccurrences - Success: OnlyNeedToRelate relation type - Empty")]
+        [Trait(nameof(ArchitecturalRuleHelper.GetViolatingOccurrences), "Success_OnlyNeedToRelate_Empty")]
+        public void GetViolatingOccurrences_Success_OnlyNeedToRelate_Empty()
+        {
+            var architectureRule = new ArchitecturalRule()
+            {
+                OriginLayer = "Origin",
+                TargetLayer = "Target",
+                RuleOperator = RuleOperator.OnlyNeedToRelate
+            };
+
+            var targetNamespace = "Test.Target";
+            
+            var layersNamespaces = new Dictionary<string, IEnumerable<string>>()
+            {
+                { "Origin", new List<string>() { "Test.Origin" } },
+                { "Target", new List<string>() { targetNamespace } }
+            };
+
+            var structures = new List<Structure>() 
+            {
+                new Structure()
+                {
+                    Name = "TargetStructure",
+                    Type = StructureType.Class,
+                    Namespace = targetNamespace,
+                    References = new List<string>() { { targetNamespace } },
+                    Relations = new List<Relation>()
+                        { new Relation(RelationType.Inheritance, 
+                            targetNamespace, true, "AnotherTargetStructure") }
+                }
+            };
+
+            var violatingOccurrences = ArchitecturalRuleHelper.GetViolatingOccurrences(
+                architectureRule, layersNamespaces, structures);
+
+            Assert.NotNull(violatingOccurrences);
+            Assert.Empty(violatingOccurrences);
+        }
+
         [Fact(DisplayName = "ArchitecturalRuleHelper GetViolatingOccurrences - Success: OnlyCanRelate relation type")]
         [Trait(nameof(ArchitecturalRuleHelper.GetViolatingOccurrences), "Success_OnlyCanRelate")]
         public void GetViolatingOccurrences_Success_OnlyCanRelate()
@@ -170,6 +210,46 @@ namespace ErosionFinder.Helpers.Tests
             AssertViolatingOccurrences(violatingOccurrences, anotherStructure, 
                 $"{targetNamespace}.{targetStructureName}");
         }    
+
+        [Fact(DisplayName = "ArchitecturalRuleHelper GetViolatingOccurrences - Success: OnlyCanRelate relation type - Empty")]
+        [Trait(nameof(ArchitecturalRuleHelper.GetViolatingOccurrences), "Success_OnlyCanRelate_Empty")]
+        public void GetViolatingOccurrences_Success_OnlyCanRelate_Empty()
+        {
+            var architectureRule = new ArchitecturalRule()
+            {
+                OriginLayer = "Origin",
+                TargetLayer = "Target",
+                RuleOperator = RuleOperator.OnlyCanRelate
+            };
+
+            var targetNamespace = "Test.Target";
+            
+            var layersNamespaces = new Dictionary<string, IEnumerable<string>>()
+            {
+                { "Origin", new List<string>() { "Test.Origin" } },
+                { "Target", new List<string>() { targetNamespace } }
+            };
+
+            var structures = new List<Structure>() 
+            {
+                new Structure()
+                {
+                    Name = "TargetStructure",
+                    Type = StructureType.Class,
+                    Namespace = targetNamespace,
+                    References = new List<string>() { { targetNamespace } },
+                    Relations = new List<Relation>()
+                        { new Relation(RelationType.Inheritance, 
+                            targetNamespace, true, "AnotherTargetStructure") }
+                }
+            };
+
+            var violatingOccurrences = ArchitecturalRuleHelper.GetViolatingOccurrences(
+                architectureRule, layersNamespaces, structures);
+
+            Assert.NotNull(violatingOccurrences);
+            Assert.Empty(violatingOccurrences);
+        }
 
         [Fact(DisplayName = "ArchitecturalRuleHelper GetViolatingOccurrences - Success: CanNotRelate relation type")]
         [Trait(nameof(ArchitecturalRuleHelper.GetViolatingOccurrences), "Success_CanNotRelate")]
