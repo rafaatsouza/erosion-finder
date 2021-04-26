@@ -6,6 +6,8 @@
 
 ErosionFinder is a library to find architectural erosion across C# code; it uses the Roslyn API to navigate throught all components from some C# solution, and checks for architectural violations based on informed rules.
 
+There is also a command-line interface, which can be viewed [here](https://github.com/rafaatsouza/erosion-finder-cli).
+
 Installation
 ------------
 
